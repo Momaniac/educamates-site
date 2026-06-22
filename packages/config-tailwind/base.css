@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/*
+ * ============================================================
+ * EducaMates Monorepo — Base Design System
+ * ============================================================
+ *
+ * This file defines the semantic color tokens and shared
+ * design primitives consumed by ALL applications in the
+ * monorepo. Each app overrides the CSS custom properties
+ * in its own globals.css to inject its brand identity.
+ *
+ * FLOW:
+ *   1. App's globals.css sets :root { --color-primary: ... }
+ *   2. This file maps them to @theme tokens
+ *   3. Tailwind generates classes: bg-brand-primary, text-brand-secondary, etc.
+ *   4. Components in @educamates/ui use those classes — zero hardcoded colors.
+ */
+
+/* ── Theme Token Mapping ───────────────────────────────────── */
+@theme {
+  /* Brand Colors — resolved from CSS custom properties */
+  --color-brand-primary:    var(--color-primary, #0c108c);
+  --color-brand-secondary:  var(--color-secondary, #f87e52);
+  --color-brand-accent:     var(--color-accent, #fe9a66);
+  --color-brand-background: var(--color-background-light, #f7e3d4);
+  --color-brand-muted:      var(--color-muted, #dbdeed);
+  --color-brand-text:       var(--brand-text, #1A1A1A);
+  --color-brand-intermediate: var(--color-intermediate, var(--color-primary, #0c108c));
+  --color-brand-warm:       var(--color-warm-soft, #fff4ef);
+
+  /*
+   * WhatsApp brand colors — intentionally CONSTANT across all tenants.
+   * WhatsApp's identity is fixed (#25D366); it is not part of any site's
+   * palette, so it is exposed as its own token rather than hardcoded inline.
+   */
+  --color-whatsapp:         #25d366;
+  --color-whatsapp-dark:    #1da851;
+
+  /* Font Family */
+  --font-outfit: "Outfit", "Outfit Fallback", system-ui, sans-serif;
+}
+
+/* ── Global Defaults ───────────────────────────────────────── */
+@layer base {
+  body {
+    font-family: var(--font-outfit);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-primary, #0c108c) 10%, transparent);
+    color: var(--color-primary, #0c108c);
+  }
+}
+
+/* ── Shared Animations ─────────────────────────────────────── */
+@keyframes partners-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@utility animate-partners-ticker {
+  animation: partners-ticker 30s linear infinite;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@utility animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out forwards;
+}

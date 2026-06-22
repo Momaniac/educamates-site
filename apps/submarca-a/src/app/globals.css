@@ -1,0 +1,43 @@
+@import "@educamates/config-tailwind/base.css";
+
+/*
+ * ============================================================
+ * Submarca A — Brand Theme (Demo)
+ * ============================================================
+ *
+ * This file demonstrates multi-tenancy: by ONLY changing these
+ * CSS custom property values, the ENTIRE UI rendered by
+ * @educamates/ui components switches to a completely different
+ * visual identity — no component code changes required.
+ *
+ * Compare with: apps/sitio-madre/src/app/globals.css
+ */
+
+/* ── Submarca A Brand Variables ────────────────────────────── */
+:root {
+  /* A green/gold palette — completely different from EducaMates */
+  --color-primary:          #0f5132;
+  --color-secondary:        #d4a017;
+  --color-accent:           #e8b94a;
+  --color-background-light: #f0f7f3;
+  --color-muted:            #d4e7da;
+
+  /* Text */
+  --brand-text:             #1A1A1A;
+
+  /* Legacy var names (for components that reference them directly) */
+  --brand-primary:          #0f5132;
+  --brand-secondary:        #d4a017;
+  --brand-accent:           #e8b94a;
+  --brand-background:       #f0f7f3;
+}
+
+/* ── Use system fonts since this submarca doesn't have Outfit ─ */
+@layer base {
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ── Source content paths for Tailwind scanning ────────────── */
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";

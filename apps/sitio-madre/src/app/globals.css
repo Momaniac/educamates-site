@@ -1,0 +1,89 @@
+@import "@educamates/config-tailwind/base.css";
+
+/*
+ * ============================================================
+ * EducaMates — Sitio Madre Brand Theme
+ * ============================================================
+ *
+ * These CSS custom properties define the visual identity for the
+ * main EducaMates site. The shared @theme in base.css maps them
+ * to Tailwind utility classes (bg-brand-primary, text-brand-secondary, etc.)
+ *
+ * To create a new brand: copy this file into a new app's src/app/globals.css
+ * and change the values below. All shared components from @educamates/ui
+ * will automatically render with the new brand's colors.
+ */
+
+/* ── Outfit Font Face Declarations ─────────────────────────── */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/OutfitRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit Fallback";
+  src: local("Arial");
+  ascent-override: 99.94%;
+  descent-override: 25.98%;
+  line-gap-override: 0%;
+  size-adjust: 100.06%;
+}
+
+/* ── EducaMates Brand Variables ────────────────────────────── */
+:root {
+  /* Primary palette */
+  --color-primary:          #0c108c;
+  --color-secondary:        #f87e52;
+  --color-accent:           #fe9a66;
+  --color-background-light: #f7f7f7;
+  --color-muted:            #e5e7eb;
+  --color-intermediate:     #0050a0;
+  --color-warm-soft:        #fff4ef;
+
+  /* Text */
+  --brand-text:             #1A1A1A;
+
+  /* Additional brand tokens used in the original site */
+  --brand-primary:          #0c108c;
+  --brand-secondary:        #f87e52;
+  --brand-accent:           #fe9a66;
+  --brand-background:       #f7f7f7;
+}
+
+/* ── Source content paths for Tailwind scanning ────────────── */
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
