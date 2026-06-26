@@ -16,12 +16,13 @@
  */
 
 /*
- * URL del sitio EMF (app `apps/emf`) desplegado.
- * TODO: actualizar este valor tras volver a desplegar EMF en Vercel
- * (la URL cambiará al recrear el proyecto). Lo ideal es definirlo con
- * la env-var NEXT_PUBLIC_URL_EMF en el proyecto de Vercel del portal.
+ * URL del sitio EMF (app `apps/emf`), desplegado en su propio proyecto Vercel.
+ * PENDIENTE: pegar aquí la URL del nuevo despliegue de EMF. Mientras esté
+ * vacía, la tarjeta EMF se muestra como "Próximamente" en lugar de enlazar a
+ * un despliegue inexistente (evita el 404 DEPLOYMENT_NOT_FOUND).
+ * Alternativa: definir la env-var NEXT_PUBLIC_URL_EMF en el proyecto del portal.
  */
-const EMF_URL = "https://educamates-site-sitio-madre.vercel.app";
+const EMF_URL = "";
 
 export const DOMAINS = {
   /** EducaMates Foundation — es el sitio que YA tenemos hecho. */
