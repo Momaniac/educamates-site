@@ -1,0 +1,81 @@
+@import "@educamates/config-tailwind/base.css";
+
+/*
+ * ============================================================
+ * Portal EducaMates — Landing madre (paraguas)
+ * ============================================================
+ *
+ * Punto de entrada del ecosistema. EducaMates Foundation se
+ * presenta como organización paraguas y el usuario elige entre
+ * las tres áreas (CEEM, EMF, Alma Libre), estilo selector de
+ * consola (PlayStation/Xbox).
+ *
+ * Reutiliza la identidad de la marca madre (navy EMF + Outfit)
+ * y define un token de color por área para los paneles.
+ */
+
+/* ── Outfit Font Face ──────────────────────────────────────── */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/OutfitRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Variables de marca (paraguas EMF) ─────────────────────── */
+:root {
+  --color-primary:          #0c108c;
+  --color-secondary:        #f87e52;
+  --color-accent:           #fe9a66;
+  --color-background-light: #f7f7f7;
+  --color-muted:            #e5e7eb;
+  --brand-text:             #1A1A1A;
+
+  --brand-primary:          #0c108c;
+  --brand-secondary:        #f87e52;
+  --brand-accent:           #fe9a66;
+  --brand-background:       #f7f7f7;
+
+  /* Acento por área (usado en los paneles del selector) */
+  --area-ceem:       #f59e0b; /* ámbar cálido — educación infantil */
+  --area-emf:        #2563eb; /* azul institucional — fundación */
+  --area-almalibre:  #14b8a6; /* teal — desarrollo humano / coaching */
+}
+
+@layer base {
+  body {
+    font-family: "Outfit", "Outfit Fallback", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ── Rutas de contenido para Tailwind ──────────────────────── */
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
