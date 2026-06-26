@@ -4,7 +4,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "dev:madre": "turbo run dev --filter=sitio-madre",
+    "dev:portal": "turbo run dev --filter=portal",
+    "dev:emf": "turbo run dev --filter=emf",
     "dev:submarca": "turbo run dev --filter=submarca-a",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",

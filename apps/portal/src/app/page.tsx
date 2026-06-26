@@ -22,7 +22,7 @@ const AREAS: readonly Area[] = [
     id: "emf",
     name: "EducaMates Foundation",
     short: "EMF",
-    // Descripción auténtica extraída del sitio ya desarrollado (sitio-madre).
+    // Descripción auténtica extraída del sitio ya desarrollado (apps/emf).
     tagline:
       "Formación académica, profesional y humana para jóvenes, adultos y organizaciones.",
     image: "/images/bg-emf.webp",

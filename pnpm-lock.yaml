@@ -15,7 +15,7 @@ importers:
         specifier: ^5.7.0
         version: 5.9.3
 
-  apps/portal:
+  apps/emf:
     dependencies:
       '@educamates/ui':
         specifier: workspace:*
@@ -61,7 +61,7 @@ importers:
         specifier: ^5.7.0
         version: 5.9.3
 
-  apps/sitio-madre:
+  apps/portal:
     dependencies:
       '@educamates/ui':
         specifier: workspace:*

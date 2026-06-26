@@ -1,6 +1,8 @@
-# EducaMates — Sitio web
+# EducaMates — Ecosistema web
 
-Sitio web de EducaMates construido como **monorepo multi-tenant** con Turborepo + pnpm. El mismo conjunto de componentes white-label (`packages/ui`) alimenta la marca madre y futuras submarcas, cambiando solo props y variables CSS.
+Ecosistema web de EducaMates construido como **monorepo multi-tenant** con Turborepo + pnpm. El mismo conjunto de componentes white-label (`packages/ui`) alimenta el portal paraguas y las marcas, cambiando solo props y variables CSS.
+
+**`portal`** es la **página madre / paraguas**: la entrada donde el usuario elige entre las tres marcas hermanas (CEEM, EMF, Alma Libre). Cada marca es (o será) su propio sitio. Hoy solo **EMF** (`apps/emf`) está desarrollado; CEEM y Alma Libre se muestran como "Próximamente".
 
 ## Stack
 
@@ -13,7 +15,8 @@ Sitio web de EducaMates construido como **monorepo multi-tenant** con Turborepo 
 ```
 educamates-monorepo/
 ├── apps/
-│   ├── sitio-madre/      # EducaMates — app principal (la que se despliega)
+│   ├── portal/           # Página madre / paraguas — entrada con las 3 marcas
+│   ├── emf/              # EducaMates Foundation — sitio de marca ya desarrollado
 │   └── submarca-a/       # Submarca demostrativa del patrón multi-tenant
 └── packages/
     ├── ui/               # Componentes compartidos white-label (header, footer, formularios…)
@@ -27,27 +30,24 @@ Requiere Node.js ≥ 18 y pnpm 9.
 
 ```bash
 pnpm install
-pnpm dev:madre      # sitio-madre en http://localhost:3000
-pnpm dev:submarca   # submarca-a
+pnpm dev:portal     # portal (paraguas) en http://localhost:3002
+pnpm dev:emf        # sitio EMF en http://localhost:3000
+pnpm dev:submarca   # submarca-a en http://localhost:3001
 ```
 
 Otros scripts: `pnpm build`, `pnpm type-check`, `pnpm lint`.
 
-## Despliegue en Vercel (app `sitio-madre`)
+## Despliegue en Vercel
 
-Al importar este repositorio en Vercel:
+Cada app es un **proyecto independiente** en Vercel (Root Directory distinto). Framework Next.js autodetectado; install/build por defecto (Vercel detecta pnpm + Turborepo); Node 18+.
 
-| Ajuste | Valor |
-|---|---|
-| **Framework Preset** | Next.js (autodetectado) |
-| **Root Directory** | `apps/sitio-madre` |
-| **Build Command** | (por defecto) `next build` |
-| **Install Command** | (por defecto) `pnpm install` |
-| **Node.js Version** | 18.x o superior |
+| App | Root Directory | Rol |
+|---|---|---|
+| **portal** | `apps/portal` | Entrada / página madre (paraguas) |
+| **emf** | `apps/emf` | Sitio de marca EducaMates Foundation |
+| submarca-a | `apps/submarca-a` | Demostración multi-tenant |
 
-Vercel detecta automáticamente el workspace de pnpm y Turborepo. No se requieren variables de entorno para el funcionamiento actual del sitio.
-
-> Para desplegar también `submarca-a`, crear un segundo proyecto en Vercel apuntando a `apps/submarca-a` como Root Directory.
+El portal enlaza a cada marca mediante la **librería de dominios** (`apps/portal/src/lib/domains.ts`). Tras desplegar EMF, define su URL ahí o con la env-var `NEXT_PUBLIC_URL_EMF` en el proyecto del portal.
 
 ## Notas
 

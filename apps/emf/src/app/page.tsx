@@ -135,7 +135,7 @@ const testimonials: Testimonial[] = [
 ];
 
 /**
- * Home page for EducaMates (Sitio Madre).
+ * Home page for EducaMates Foundation (EMF).
  *
  * All reusable sections come from @educamates/ui and are driven by the data
  * above. Media is served from local /public assets (migrated from the

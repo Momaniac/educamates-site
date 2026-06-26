@@ -19,7 +19,7 @@ import { Menu, Users } from "lucide-react";
  * only the props and the CSS variables in each app's globals.css.
  *
  * ┌─────────────────────────────────────────────────────────────┐
- * │  apps/sitio-madre/globals.css    apps/submarca-a/globals.css │
+ * │  apps/emf/globals.css            apps/submarca-a/globals.css │
  * │  --color-primary: #0c108c       --color-primary: #1a7a4c    │
  * │          ↓                               ↓                  │
  * │    ┌──────────────────────────────────────────┐              │

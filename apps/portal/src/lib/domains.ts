@@ -10,17 +10,22 @@
  *    sobrescribiendo con variables de entorno en Vercel
  *    (NEXT_PUBLIC_URL_*), sin tocar este código.
  *
- *  Nota: el destino real hoy es el sitio demo aprobado
- *  (sitio-madre). No se usa ningún sitio anterior del cliente.
+ *  Nota: el destino real hoy es el sitio EMF que ya construimos
+ *  (app `apps/emf`). No se usa ningún sitio anterior del cliente.
  * ============================================================
  */
 
-/** Sitio demo aprobado (sitio-madre) — lo que el cliente ya validó. */
-const SITIO_DEMO = "https://educamates-site-sitio-madre.vercel.app";
+/*
+ * URL del sitio EMF (app `apps/emf`) desplegado.
+ * TODO: actualizar este valor tras volver a desplegar EMF en Vercel
+ * (la URL cambiará al recrear el proyecto). Lo ideal es definirlo con
+ * la env-var NEXT_PUBLIC_URL_EMF en el proyecto de Vercel del portal.
+ */
+const EMF_URL = "https://educamates-site-sitio-madre.vercel.app";
 
 export const DOMAINS = {
-  /** EducaMates Foundation — es el sitio que YA tenemos hecho (demo aprobado). */
-  emf: process.env.NEXT_PUBLIC_URL_EMF ?? SITIO_DEMO,
+  /** EducaMates Foundation — es el sitio que YA tenemos hecho. */
+  emf: process.env.NEXT_PUBLIC_URL_EMF ?? EMF_URL,
 
   /** Centro Educativo EducaMates — sitio aún no desarrollado → Próximamente. */
   ceem: process.env.NEXT_PUBLIC_URL_CEEM ?? "",
