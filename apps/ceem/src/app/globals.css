@@ -1,0 +1,143 @@
+@import "@educamates/config-tailwind/base.css";
+@import "@educamates/config-tailwind/palette-ceem.css";
+
+/*
+ * ============================================================
+ * Centro Educativo EducaMates (CEEM)
+ * ============================================================
+ *
+ * Kínder: maternal a preescolar 3. La dirección de arte sale de
+ * la gráfica que entregó el cliente — fondo blanco, manchas de
+ * color, tipografía tipo calcomanía con contorno blanco y todo
+ * redondeado. "Tierno y dinámico", que fue la instrucción.
+ *
+ * Los colores NO se declaran aquí: llegan de
+ * @educamates/config-tailwind/palette-ceem.css.
+ */
+
+/* ── Outfit Font Face ──────────────────────────────────────── */
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/OutfitRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/Outfit-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  body {
+    font-family: "Outfit", "Outfit Fallback", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ============================================================
+ *  Lenguaje de calcomanía
+ * ============================================================ */
+
+/*
+ * El recurso central de la gráfica: contorno blanco grueso más
+ * sombra corta, como una pegatina puesta encima de la página.
+ */
+.sticker {
+  box-shadow:
+    var(--ceem-sticker-ring),
+    var(--ceem-sticker-shadow);
+}
+
+/* Píldora de color con texto blanco, como los rótulos del arte. */
+.sticker-pill {
+  border-radius: var(--ceem-radius-pill);
+  box-shadow:
+    var(--ceem-sticker-ring),
+    var(--ceem-sticker-shadow);
+}
+
+/*
+ * Titulares con contorno blanco. -webkit-text-stroke pinta el
+ * borde por dentro de la letra y adelgaza el trazo, así que se
+ * usa paint-order para que el relleno quede encima.
+ */
+.sticker-text {
+  paint-order: stroke fill;
+  -webkit-text-stroke: 7px #fff;
+  text-shadow: 0 5px 0 rgb(27 54 104 / 0.16);
+}
+
+@media (max-width: 640px) {
+  .sticker-text {
+    -webkit-text-stroke-width: 4px;
+  }
+}
+
+/* ── Manchas de color del fondo ────────────────────────────── */
+.blob {
+  border-radius: 46% 54% 58% 42% / 52% 46% 54% 48%;
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(1.5%, -2.5%, 0) rotate(6deg);
+  }
+}
+
+.blob-drift {
+  animation: blob-drift 18s ease-in-out infinite;
+}
+
+/* ── Rebote suave para elementos de acento ─────────────────── */
+@keyframes soft-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.soft-bounce {
+  animation: soft-bounce 3.4s ease-in-out infinite;
+}
+
+/* ── Accesibilidad: sin movimiento ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .blob-drift,
+  .soft-bounce {
+    animation: none;
+  }
+}
+
+/* ── Rutas de contenido para Tailwind ──────────────────────── */
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
