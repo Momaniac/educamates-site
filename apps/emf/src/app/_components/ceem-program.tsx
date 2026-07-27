@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { PageHero, ContactCTA, buildWhatsAppUrl } from "@educamates/ui";
 import { CONTACTS, PROGRAM_OPTIONS } from "../../lib/site";
+import { CEEM_SITE_AVAILABLE, CEEM_SITE_URL } from "../../lib/ceem-site";
 
 type CeemVariant = "maternal" | "preescolar";
 
@@ -69,6 +70,38 @@ export function CeemProgram({ variant }: { readonly variant: CeemVariant }) {
         title={title}
         subtitle={isMaternal ? "Atención desde los 45 días de nacidos." : "Un programa integral para el desarrollo académico, emocional, social y personal."}
       />
+
+      {/*
+       * Salto al sitio propio del Centro Educativo. Es aditivo: el
+       * contenido de esta página se queda tal cual, solo se ofrece
+       * el enlace. Si CEEM todavía no está desplegado, este bloque
+       * no se pinta y la página se ve exactamente como antes.
+       */}
+      {CEEM_SITE_AVAILABLE && (
+        <section className="bg-brand-secondary/10 border-b border-brand-muted">
+          <div className="container mx-auto px-4 max-w-6xl py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+              <div className="flex items-start sm:items-center gap-3 flex-1">
+                <School className="w-6 h-6 text-brand-secondary shrink-0 mt-0.5 sm:mt-0" />
+                <p className="text-brand-text/80 text-sm md:text-base">
+                  <strong className="text-brand-intermediate">{title}</strong> forma parte del
+                  Centro Educativo EducaMates, que tiene su propio sitio con horarios, talleres e
+                  inscripciones.
+                </p>
+              </div>
+              <a
+                href={CEEM_SITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-brand-secondary hover:bg-brand-accent text-white px-5 py-2.5 rounded-xl font-bold transition-colors shrink-0"
+              >
+                Ir al sitio del Centro Educativo
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-white py-12 lg:py-20 overflow-x-clip">
         <div className="container mx-auto px-4 max-w-6xl">
@@ -191,6 +224,12 @@ export function CeemProgram({ variant }: { readonly variant: CeemVariant }) {
               <p className="text-white/75 mt-2">Habla directamente con CEEM para conocer disponibilidad e inscripciones.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              {/* Cuando existe sitio de CEEM, es la acción principal. */}
+              {CEEM_SITE_AVAILABLE && (
+                <a href={CEEM_SITE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white hover:bg-brand-muted text-brand-intermediate px-6 py-3 rounded-xl font-bold transition-colors">
+                  Ver sitio del Centro <ArrowRight className="w-5 h-5" />
+                </a>
+              )}
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-brand-secondary hover:bg-brand-accent text-white px-6 py-3 rounded-xl font-bold transition-colors">
                 Hablar por WhatsApp <MessageCircle className="w-5 h-5" />
               </a>
