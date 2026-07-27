@@ -8,7 +8,7 @@ Este monorepo se **desarrolla unificado** pero se **despliega por sitio**: cada 
 |---|---|---|---|
 | **portal** | `apps/portal` | Página madre / paraguas — la entrada principal | ✅ |
 | **emf** | `apps/emf` | Sitio de marca EducaMates Foundation | ✅ |
-| **ceem** | `apps/ceem` | Centro Educativo EducaMates | ⏳ listo, por desplegar |
+| **ceem** | `apps/ceem` | Centro Educativo EducaMates | ✅ |
 | alma-libre | `apps/alma-libre` | Alma Libre (futuro) | 🔜 |
 
 Todos apuntan al **mismo repositorio**; lo único que cambia entre proyectos es el **Root Directory**.

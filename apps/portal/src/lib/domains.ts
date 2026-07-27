@@ -22,12 +22,15 @@
  */
 const EMF_URL = "https://educamates-site-emf.vercel.app";
 
+/** Sitio del Centro Educativo (app `apps/ceem`), su propio proyecto Vercel. */
+const CEEM_URL = "https://educamates-site-ceem.vercel.app";
+
 export const DOMAINS = {
   /** EducaMates Foundation — es el sitio que YA tenemos hecho. */
   emf: process.env.NEXT_PUBLIC_URL_EMF ?? EMF_URL,
 
-  /** Centro Educativo EducaMates — sitio aún no desarrollado → Próximamente. */
-  ceem: process.env.NEXT_PUBLIC_URL_CEEM ?? "",
+  /** Centro Educativo EducaMates — desplegado en jul 2026. */
+  ceem: process.env.NEXT_PUBLIC_URL_CEEM ?? CEEM_URL,
 
   /** Alma Libre — sitio aún no desarrollado → Próximamente. */
   almalibre: process.env.NEXT_PUBLIC_URL_ALMALIBRE ?? "",

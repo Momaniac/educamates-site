@@ -14,8 +14,8 @@
  * ============================================================
  */
 
-/** Vacío hasta que CEEM esté desplegado. Ver PENDIENTES-CLIENTE.md */
-const CEEM_URL_FALLBACK = "";
+/** Sitio de CEEM, desplegado en su propio proyecto Vercel (jul 2026). */
+const CEEM_URL_FALLBACK = "https://educamates-site-ceem.vercel.app";
 
 export const CEEM_SITE_URL = process.env.NEXT_PUBLIC_URL_CEEM ?? CEEM_URL_FALLBACK;
 
