@@ -7,11 +7,13 @@ Este monorepo se **desarrolla unificado** pero se **despliega por sitio**: cada 
 | Proyecto Vercel | Root Directory | Rol | Estado |
 |---|---|---|---|
 | **portal** | `apps/portal` | Página madre / paraguas — la entrada principal | ✅ |
-| **emf** | `apps/emf` | Sitio de marca EducaMates Foundation | ⏳ por desplegar |
-| ceem | `apps/ceem` | Centro Educativo EducaMates (futuro) | 🔜 |
+| **emf** | `apps/emf` | Sitio de marca EducaMates Foundation | ✅ |
+| **ceem** | `apps/ceem` | Centro Educativo EducaMates | ⏳ listo, por desplegar |
 | alma-libre | `apps/alma-libre` | Alma Libre (futuro) | 🔜 |
 
 Todos apuntan al **mismo repositorio**; lo único que cambia entre proyectos es el **Root Directory**.
+
+> **No hace falta un repo por marca.** Cada app consume `@educamates/ui` y `@educamates/config-tailwind` como dependencias de workspace: sacarla a un repo propio rompería esos enlaces y obligaría a publicar o duplicar los paquetes. Lo que se crea por marca es un **proyecto de Vercel**, no un repositorio.
 
 ## Crear un proyecto
 
@@ -35,6 +37,16 @@ Si el valor está **vacío**, la tarjeta se muestra como **"Próximamente"** (no
 1. Copia la URL del despliegue de EMF.
 2. Pégala en `EMF_URL` de `domains.ts` **o** define `NEXT_PUBLIC_URL_EMF` en el proyecto del portal.
 3. **Redeploy** del portal.
+
+### Tras desplegar CEEM
+
+CEEM se enlaza desde **dos** sitios, así que hay que actualizar los dos:
+
+1. **Portal** — define `NEXT_PUBLIC_URL_CEEM` en el proyecto del portal (o rellena `ceem` en [`domains.ts`](apps/portal/src/lib/domains.ts)). La tarjeta pasa sola de "Próximamente" a activa.
+2. **EMF** — define `NEXT_PUBLIC_URL_CEEM` en el proyecto de EMF. Aparecen los CTA hacia el Centro Educativo en `/maternal` y `/preescolar`; ver [`ceem-site.ts`](apps/emf/src/lib/ceem-site.ts).
+3. **Redeploy** de ambos.
+
+Mientras la variable esté vacía no hay enlaces rotos: la tarjeta del portal sigue en "Próximamente" y las páginas de EMF se ven como antes.
 
 ## Errores comunes
 
