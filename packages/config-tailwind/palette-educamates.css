@@ -1,0 +1,89 @@
+/*
+ * ============================================================
+ *  Paleta EducaMates — fuente única de verdad
+ * ------------------------------------------------------------
+ *  No viene de un manual de marca: no existe. Viene del sitio
+ *  EducaMates Foundation (`apps/emf`), que es el que el cliente
+ *  ya aprobó y tiene en producción. Se extrajo auditando ese
+ *  código, y la jerarquía de abajo son los usos REALES contados
+ *  en `apps/emf` + `packages/ui`, no una opinión.
+ *
+ *  QUIÉN LA USA
+ *  Cualquier app de la familia EducaMates:
+ *      @import "@educamates/config-tailwind/palette-educamates.css";
+ *  Eso define los `--color-*`, y `base.css` los convierte en
+ *  clases de Tailwind (bg-brand-primary, text-brand-secondary…).
+ *  Una app que NO sea EducaMates simplemente no la importa y
+ *  declara sus propios `--color-*`: el mecanismo white-label del
+ *  monorepo sigue intacto.
+ *
+ *  CÓMO CAMBIARLA
+ *  Aquí y en ningún otro sitio. Si un color hace falta en un solo
+ *  componente, no se escribe a mano: se deriva con color-mix()
+ *  desde uno de estos tokens.
+ * ============================================================
+ */
+
+:root {
+  /*
+   * ── Coral · #f87e52 ────────────────────────── secondary
+   * El color de acción y el más reconocible de la marca.
+   * Es el más usado de todo el sistema (148 usos: texto, fondos,
+   * bordes y anillos de foco). Si una pieza tiene que gritar
+   * "EducaMates", grita en coral.
+   */
+  --color-secondary: #f87e52;
+
+  /*
+   * ── Azul intermedio · #0050a0 ────────────── intermediate
+   * El azul de trabajo: titulares, iconos, fondos de sección.
+   * Se usa MÁS que el primario (94 usos frente a 61). Es el azul
+   * que la gente asocia al sitio, no el primario.
+   */
+  --color-intermediate: #0050a0;
+
+  /*
+   * ── Azul primario · #0c108c ──────────────────── primary
+   * El índigo profundo. Ancla institucional: cabeceras, pies,
+   * `theme-color` del navegador. Casi negro en pantalla, por eso
+   * funciona como fondo pero no como acento.
+   */
+  --color-primary: #0c108c;
+
+  /*
+   * ── Durazno · #fe9a66 ──────────────────────────── accent
+   * El coral aclarado. Realces y fondos suaves; en oscuro es la
+   * versión legible del coral. Uso puntual (13).
+   */
+  --color-accent: #fe9a66;
+
+  /*
+   * ── Neutros ─────────────────────────────────────────────
+   * text  · #1a1a1a  cuerpo de texto sobre claro (77 usos)
+   * muted · #e5e7eb  bordes y separadores (46)
+   * bg    · #f7f7f7  fondo de página claro (34)
+   * warm  · #fff4ef  crema; fondo cálido de sección
+   */
+  --brand-text: #1a1a1a;
+  --color-muted: #e5e7eb;
+  --color-background-light: #f7f7f7;
+  --color-warm-soft: #fff4ef;
+
+  /*
+   * Alias heredados del sitio original. `base.css` lee los
+   * `--color-*`; estos existen porque algunos componentes de
+   * `packages/ui` todavía leen `--brand-*` directamente.
+   */
+  --brand-primary: #0c108c;
+  --brand-secondary: #f87e52;
+  --brand-accent: #fe9a66;
+  --brand-background: #f7f7f7;
+}
+
+/*
+ * ── Tipografía ──────────────────────────────────────────────
+ * Outfit en todos los pesos. El archivo de fuentes lo sirve cada
+ * app desde su propio /public/fonts, así que los @font-face
+ * viven en el globals.css de cada una; la familia se declara en
+ * base.css como --font-outfit.
+ */

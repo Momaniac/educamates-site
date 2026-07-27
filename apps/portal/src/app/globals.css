@@ -1,4 +1,5 @@
 @import "@educamates/config-tailwind/base.css";
+@import "@educamates/config-tailwind/palette-educamates.css";
 
 /*
  * ============================================================
@@ -7,11 +8,13 @@
  *
  * Punto de entrada del ecosistema. EducaMates Foundation se
  * presenta como organización paraguas y el usuario elige entre
- * las tres áreas (CEEM, EMF, Alma Libre), estilo selector de
- * consola (PlayStation/Xbox).
+ * las tres áreas (CEEM, EMF, Alma Libre).
  *
- * Reutiliza la identidad de la marca madre (navy EMF + Outfit)
- * y define un token de color por área para los paneles.
+ * Dirección de arte definida por el cliente (mockup aprobado):
+ * escenario nocturno azul profundo, título monumental y tres
+ * "orbes" de cristal flotando sobre un piso reflectante.
+ * Todo el escenario es CSS/SVG — sin imágenes de fondo — para
+ * que se vea nítido en cualquier pantalla y pese casi nada.
  */
 
 /* ── Outfit Font Face ──────────────────────────────────────── */
@@ -51,29 +54,228 @@
   font-display: swap;
 }
 
-/* ── Variables de marca (paraguas EMF) ─────────────────────── */
+/* ── Tonos propios del escenario ───────────────────────────── */
 :root {
-  --color-primary:          #0c108c;
-  --color-secondary:        #f87e52;
-  --color-accent:           #fe9a66;
-  --color-background-light: #f7f7f7;
-  --color-muted:            #e5e7eb;
-  --brand-text:             #1A1A1A;
+  /*
+   * La paleta NO se declara aquí: llega desde
+   * @educamates/config-tailwind/palette-educamates.css, que es el
+   * único sitio donde se toca un color de la marca.
+   *
+   * Lo de abajo son tonos derivados que solo existen en el portal
+   * (ninguna otra app tiene un escenario nocturno). Todos salen
+   * por color-mix() de un token de la paleta, así que si algún día
+   * cambia el azul corporativo, el escenario se mueve con él.
+   */
+  --portal-ink:   color-mix(in srgb, var(--color-primary) 22%, #000);
+  --portal-deep:  color-mix(in srgb, var(--color-primary) 30%, #000);
+  --portal-mid:   color-mix(in srgb, var(--color-primary) 62%, #000);
+  --portal-base:  color-mix(in srgb, var(--color-primary) 40%, #000);
 
-  --brand-primary:          #0c108c;
-  --brand-secondary:        #f87e52;
-  --brand-accent:           #fe9a66;
-  --brand-background:       #f7f7f7;
+  /* Auroras del fondo: primario e intermedio de la marca. */
+  --portal-glow-1: var(--color-primary);
+  --portal-glow-2: var(--color-intermediate);
 
-  /* Acento por área (usado en los paneles del selector) */
-  --area-ceem:       #f59e0b; /* ámbar cálido — educación infantil */
-  --area-emf:        #2563eb; /* azul institucional — fundación */
-  --area-almalibre:  #14b8a6; /* teal — desarrollo humano / coaching */
+  /* Brillo del piso reflectante: el azul intermedio aclarado. */
+  --portal-sheen: color-mix(in srgb, var(--color-intermediate) 40%, #fff);
+
+  /* La línea bajo el título es el coral de la marca. */
+  --portal-line:  var(--color-secondary);
+
+  /*
+   * ⚠ ÚNICO COLOR FUERA DE LA PALETA DE TODO EL PORTAL.
+   * La paleta EducaMates tiene dos familias (azul y cálida) y el
+   * portal necesita tres señales distinguibles, una por marca
+   * hermana. Este lila sale de aclarar el índigo primario hacia
+   * el violeta. Pendiente de validar con el cliente: si lo
+   * rechaza, se cambia aquí y en ningún otro sitio.
+   */
+  --area-almalibre: #7b6fd0;
 }
 
 @layer base {
   body {
     font-family: "Outfit", "Outfit Fallback", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ============================================================
+ *  Escenario: fondo nocturno con auroras
+ * ============================================================ */
+
+.portal-stage {
+  background:
+    radial-gradient(
+      85% 55% at 12% 32%,
+      color-mix(in srgb, var(--portal-glow-2) 30%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      70% 50% at 88% 18%,
+      color-mix(in srgb, var(--portal-glow-1) 34%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      110% 70% at 50% 118%,
+      color-mix(in srgb, var(--portal-glow-2) 26%, transparent) 0%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--portal-deep) 0%, var(--portal-mid) 58%, var(--portal-base) 100%);
+}
+
+/*
+ * Las auroras se desplazan muy lento para que la escena respire
+ * sin distraer de las tarjetas.
+ */
+@keyframes portal-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+  }
+}
+
+.portal-aurora {
+  animation: portal-drift 22s ease-in-out infinite;
+}
+
+/*
+ * Piso reflectante bajo los orbes. Todo son elipses: cualquier
+ * degradado lineal dejaba un canto recto cruzando la pantalla.
+ */
+.portal-floor {
+  background: radial-gradient(
+    75% 120% at 50% 0%,
+    color-mix(in srgb, var(--portal-sheen) 22%, transparent) 0%,
+    color-mix(in srgb, var(--portal-sheen) 7%, transparent) 45%,
+    transparent 74%
+  );
+}
+
+/* Fondos planos del resto de la página, del mismo origen. */
+.portal-ink-bg {
+  background-color: var(--portal-ink);
+}
+
+.portal-panel-bg {
+  background-color: var(--portal-base);
+}
+
+/* Velo del menú: el mismo fondo, apenas translúcido. */
+.portal-veil {
+  background-color: color-mix(in srgb, var(--portal-ink) 95%, transparent);
+}
+
+/* ============================================================
+ *  Orbes de área
+ * ============================================================ */
+
+/*
+ * Cada orbe recibe su color por la variable --accent (inline,
+ * desde los datos del área). Así el disco, el halo y el reflejo
+ * comparten un único origen de color.
+ */
+.orb-disc {
+  background:
+    radial-gradient(
+      125% 105% at 32% 18%,
+      color-mix(in srgb, var(--accent) 92%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 58%, transparent) 52%,
+      color-mix(in srgb, var(--accent) 26%, transparent) 100%
+    );
+  /*
+   * El aro claro es lo que separa cada disco del fondo: sin él,
+   * el azul corporativo de CEEM se funde con el escenario.
+   */
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -28px 48px rgba(255, 255, 255, 0.07),
+    0 26px 70px -14px color-mix(in srgb, var(--accent) 60%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms ease;
+}
+
+/* Solo el disco frontal reacciona; el reflejo se queda en su sitio. */
+.orb-link:hover .orb-face,
+.orb-link:focus-visible .orb-face {
+  transform: translateY(-10px) scale(1.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -28px 48px rgba(255, 255, 255, 0.1),
+    0 34px 90px -12px color-mix(in srgb, var(--accent) 78%, transparent);
+}
+
+/* Flotación en reposo, escalonada por orbe desde el componente. */
+@keyframes orb-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.orb-floating {
+  animation: orb-float 7s ease-in-out infinite;
+}
+
+/*
+ * Reflejo: la máscara vive en el contenedor y el volteo en el
+ * hijo, para que el desvanecido siempre corra hacia abajo.
+ */
+.orb-mirror {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, transparent 58%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, transparent 58%);
+}
+
+.orb-mirror > * {
+  transform: scaleY(-1);
+  filter: blur(6px);
+}
+
+/*
+ * Área aún sin sitio: baja de intensidad pero conserva su color.
+ * El cliente quiere ver las tres marcas identificadas desde el
+ * primer vistazo, aunque dos todavía no tengan destino.
+ */
+.orb-soon .orb-disc {
+  filter: brightness(0.92);
+  opacity: 0.86;
+}
+
+/* ── Indicador de scroll ───────────────────────────────────── */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2.2s ease-in-out infinite;
+}
+
+/* ── Accesibilidad: sin movimiento ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .portal-aurora,
+  .orb-floating,
+  .animate-scroll-cue {
+    animation: none;
+  }
+
+  .orb-disc {
+    transition: none;
   }
 }
 

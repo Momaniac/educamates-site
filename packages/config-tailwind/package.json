@@ -4,6 +4,8 @@
   "private": true,
   "exports": {
     "./base.css": "./base.css",
+    "./palette-educamates.css": "./palette-educamates.css",
+    "./palette-ceem.css": "./palette-ceem.css",
     "./tailwind.config": "./tailwind.config.ts"
   },
   "devDependencies": {
