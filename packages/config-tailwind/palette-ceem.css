@@ -8,16 +8,24 @@
  *  corporativa. Las dos comparten ADN — el azul y el naranja del
  *  logotipo "Educa | Mates" — y ahí acaba el parecido.
  *
- *  DE DÓNDE SALEN ESTOS COLORES
- *  Leídos de la gráfica oficial de CEEM que entregó el cliente
- *  (la pieza de "Síguenos y sé parte de nuestra comunidad"): el
- *  anillo multicolor del logo, los stickers tipográficos y las
- *  manchas del fondo.
+ *  DE DÓNDE SALEN ESTOS COLORES  ✅ OFICIALES (ago 2026)
+ *  Muestreados píxel a píxel del logotipo oficial que entregó el
+ *  cliente (`apps/ceem/public/marca/logo-ceem.png`), no leídos a
+ *  ojo de una gráfica comprimida. Los seis puntos bajo la palabra
+ *  "Educa | Mates" SON la paleta de la marca, y el lema oficial
+ *  los nombra en el mismo orden:
  *
- *  ⚠ PROVISIONAL. Son valores leídos de una imagen comprimida,
- *  no de un archivo vectorial. El cliente tiene pendiente enviar
- *  los logos oficiales; cuando lleguen hay que verificar cada
- *  hex contra el original y corregir AQUÍ, en ningún otro sitio.
+ *      Únicos · Plenos · Completos · Perfectos · Felices
+ *      carmín   naranja   cian       olivo      morado
+ *
+ *  ⚠ CAMBIO RESPECTO A LA VERSIÓN PROVISIONAL (jul 2026):
+ *  la lectura anterior salía de una imagen comprimida y erraba en
+ *  casi todo. Correcciones reales, no cosméticas:
+ *    · el "magenta" #ec3a8b era en realidad carmín  #dc1c49
+ *    · el verde manzana #8dc63f era olivo           #60890d
+ *    · el marino #1b3668 era mucho más profundo     #002884
+ *    · NO existe amarillo en la marca — se retiró
+ *    · SÍ existe un morado que faltaba              #3d1d6b
  *
  *  CÓMO SE USA
  *      @import "@educamates/config-tailwind/palette-ceem.css";
@@ -34,75 +42,107 @@
    * componentes de packages/ui funcionen sin tocarlos.
    */
 
-  /* Azul marino del logotipo y de los titulares "SÍGUENOS" /
-     "COMUNIDAD". Es el color de texto fuerte y de los botones. */
-  --color-primary: #1b3668;
+  /* Azul marino del logotipo: el texto "Educa | Mates" y el
+     quinto punto de la rueda. Color de texto fuerte y de botones. */
+  --color-primary: #002884;
 
-  /* Magenta. En la gráfica es el color que más pesa después del
-     marino: manchas, píldora principal y corazones. Cumple el
-     papel que el coral cumple en EducaMates Foundation. */
-  --color-secondary: #ec3a8b;
+  /* Carmín, el primer punto de la rueda y el de "Únicos". Cumple
+     el papel que el coral cumple en EducaMates Foundation. */
+  --color-secondary: #dc1c49;
 
-  /* Naranja de "SÉ" y de la barra del logotipo Educa|Mates.
-     Es el puente con la marca madre. */
-  --color-accent: #f5871f;
+  /* Naranja de la barra que separa "Educa" de "Mates" y del punto
+     de "Plenos". Es el puente con la marca madre. */
+  --color-accent: #ef7501;
 
-  /* Azul EducaMates en su versión luminosa, para kínder. */
-  --color-intermediate: #1554c0;
+  /* Cian del avión de papel en su versión sólida. */
+  --color-intermediate: #008fda;
 
   /* CEEM vive sobre blanco puro, no sobre el gris de EMF: la
      estética de sticker necesita el contorno blanco para leerse. */
   --color-background-light: #ffffff;
-  --color-muted: #e6ecf6;
-  --color-warm-soft: #fff6ef;
-  --brand-text: #1f2a44;
+  --color-muted: #e7edf7;
+  --color-warm-soft: #fff5ec;
+  --brand-text: #1c2540;
 
   /*
-   * ── Rueda de color del kínder ───────────────────────────────
-   * Los seis colores del anillo del logo. No son decoración
-   * suelta: se usan para diferenciar niveles, talleres y
-   * tarjetas, igual que en la gráfica cada frase tiene el suyo.
+   * ── Rueda de color: los seis puntos del logotipo ────────────
+   * En el orden exacto en que aparecen bajo el logotipo. No son
+   * decoración suelta: diferencian niveles, talleres y tarjetas,
+   * igual que en el lema cada palabra lleva el suyo.
    * Un elemento toma UNO de la rueda, nunca una mezcla nueva.
    */
-  --ceem-magenta: #ec3a8b;
-  --ceem-orange: #f5871f;
-  --ceem-yellow: #f9b233;
-  --ceem-green: #8dc63f;
-  --ceem-cyan: #29abe2;
-  --ceem-red: #e63946;
-  --ceem-blue: #1554c0;
-  --ceem-navy: #1b3668;
+  --ceem-carmin: #dc1c49;
+  --ceem-orange: #ef7501;
+  --ceem-olive: #60890d;
+  --ceem-cyan: #008fda;
+  --ceem-navy: #002884;
+  --ceem-purple: #3d1d6b;
+
+  /* Azul del avión de papel. Único color de la marca pensado para
+     fondos amplios: encima siempre va tinta marino. */
+  --ceem-sky: #8dd8ff;
 
   /*
-   * ── Tinta sobre cada color ──────────────────────────────────
-   * Los colores del kínder son luminosos y el blanco encima NO
-   * se lee: sobre amarillo da 2:1 cuando el mínimo legible es
-   * 4.5:1. Cada color trae aquí la tinta con la que sí contrasta,
-   * para no tener que decidirlo tarjeta por tarjeta.
+   * ── Superficies con texto ───────────────────────────────────
+   * Los colores puros son luminosos y varios NO aguantan texto
+   * pequeño encima: el naranja da 2.9:1 con blanco y 4.4:1 con
+   * marino, el olivo 4.1:1, el cian 3.5:1 — por debajo del 4.5:1
+   * que exige WCAG AA.
+   *
+   * Por eso hay dos familias y la regla es corta:
+   *   · rueda pura  → puntos, iconos, títulos grandes, manchas
+   *   · `-deep`     → cualquier superficie que lleve texto corrido
+   *
+   * Los `-deep` están oscurecidos lo justo para pasar 4.5:1 con
+   * blanco (medido, no estimado). Carmín, marino y morado ya
+   * cumplen en su versión pura y se repiten tal cual, para que
+   * site.ts pueda referirse siempre a un token `-deep`.
    */
-  --ceem-on-magenta: #ffffff;
-  --ceem-on-blue: #ffffff;
+  --ceem-carmin-deep: #dc1c49; /* 4.88:1 con blanco */
+  --ceem-orange-deep: #ba5b01; /* 4.58:1 */
+  --ceem-olive-deep: #5b820c; /* 4.52:1 */
+  --ceem-cyan-deep: #007cbe; /* 4.54:1 */
+  --ceem-navy-deep: #002884; /* 12.83:1 */
+  --ceem-purple-deep: #3d1d6b; /* 13.24:1 */
+
+  /*
+   * ── Tinta sobre cada superficie ─────────────────────────────
+   * Emparejada con la familia `-deep` de arriba: sobre todas ellas
+   * el blanco pasa AA. Se mantienen como tokens en vez de escribir
+   * #fff suelto para que una superficie futura pueda cambiar de
+   * tinta sin tocar los datos.
+   */
+  --ceem-on-carmin: #ffffff;
+  --ceem-on-orange: #ffffff;
+  --ceem-on-olive: #ffffff;
+  --ceem-on-cyan: #ffffff;
   --ceem-on-navy: #ffffff;
-  --ceem-on-red: #ffffff;
-  --ceem-on-orange: var(--ceem-navy);
-  --ceem-on-yellow: var(--ceem-navy);
-  --ceem-on-green: var(--ceem-navy);
-  --ceem-on-cyan: var(--ceem-navy);
+  --ceem-on-purple: #ffffff;
+
+  /* El cielo es la excepción: es claro, y encima va marino. */
+  --ceem-on-sky: #002884; /* 8.19:1 */
 
   /*
-   * Versión oscurecida del magenta, para superficies grandes con
-   * texto corrido: el magenta puro con blanco encima se queda en
-   * 3.6:1. Derivado, no inventado.
+   * ── Titulares grandes ───────────────────────────────────────
+   * El texto de 24px en negrita para arriba solo necesita 3:1, no
+   * 4.5:1. A ese umbral el carmín, el olivo y el cian sirven en su
+   * versión PURA — no hace falta token — y bajarlos al `-deep`
+   * apagaría la marca sin ganar nada.
+   *
+   * El naranja es el único que se queda corto, y por muy poco:
+   * 2.91:1. Un 3 % de oscurecimiento lo cruza y a simple vista es
+   * el mismo naranja. Usar SOLO en titulares; para texto normal
+   * sigue mandando --ceem-orange-deep.
    */
-  --ceem-magenta-deep: color-mix(in srgb, var(--ceem-magenta) 78%, #000);
+  --ceem-orange-display: #e87101; /* 3.09:1 con blanco */
 
   /*
    * Alias heredados: algunos componentes de packages/ui todavía
    * leen `--brand-*` en vez de `--color-*`.
    */
-  --brand-primary: #1b3668;
-  --brand-secondary: #ec3a8b;
-  --brand-accent: #f5871f;
+  --brand-primary: #002884;
+  --brand-secondary: #dc1c49;
+  --brand-accent: #ef7501;
   --brand-background: #ffffff;
 }
 
@@ -116,5 +156,5 @@
   --ceem-radius-pill: 999px;
   --ceem-radius-card: 1.75rem;
   --ceem-sticker-ring: 0 0 0 5px #ffffff;
-  --ceem-sticker-shadow: 0 10px 24px -8px rgb(27 54 104 / 0.28);
+  --ceem-sticker-shadow: 0 10px 24px -8px rgb(0 40 132 / 0.28);
 }

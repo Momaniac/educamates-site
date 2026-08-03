@@ -1,11 +1,16 @@
 import {
   ArrowRight,
   CheckCircle2,
+  Facebook,
+  Instagram,
+  Landmark,
   Link2,
   MapPin,
   MessageCircle,
   Phone,
+  ShieldCheck,
   Sparkles,
+  UserRound,
 } from "lucide-react";
 import Image from "next/image";
 import { buildWhatsAppUrl } from "@educamates/ui";
@@ -16,9 +21,15 @@ import { Wordmark } from "@/components/wordmark";
 import {
   BENEFICIOS,
   CONTACT,
+  DOCUMENTOS_COLABORADOR,
   ENFOQUE,
   ILUSTRACIONES,
+  LEMA,
+  NAV_SECUNDARIA,
   NIVELES,
+  PAGOS,
+  SEDES,
+  SEP,
   SERVICIOS,
   TALLERES,
 } from "@/lib/site";
@@ -26,6 +37,17 @@ import {
 const whatsappUrl = buildWhatsAppUrl({
   phone: CONTACT.whatsappNumber,
   message: `Hola, me gustaría recibir información sobre ${CONTACT.name}.`,
+});
+
+/* Los datos de cuenta no se publican: se piden por aquí. */
+const whatsappPagosUrl = buildWhatsAppUrl({
+  phone: CONTACT.whatsappNumber,
+  message: "Hola, necesito los datos bancarios para realizar un pago.",
+});
+
+const whatsappVacantesUrl = buildWhatsAppUrl({
+  phone: CONTACT.whatsappNumber,
+  message: "Hola, me interesa trabajar en el Centro Educativo EducaMates.",
 });
 
 export default function HomePage() {
@@ -38,17 +60,17 @@ export default function HomePage() {
         <section className="relative overflow-hidden bg-white px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-20">
           {/* Manchas de color del arte del cliente */}
           <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="blob blob-drift absolute -left-24 -top-16 h-72 w-72 bg-[var(--ceem-magenta)]/25" />
+            <div className="blob blob-drift absolute -left-24 -top-16 h-72 w-72 bg-[var(--ceem-carmin)]/25" />
             <div
-              className="blob blob-drift absolute -right-20 top-4 h-64 w-64 bg-[var(--ceem-blue)]/20"
+              className="blob blob-drift absolute -right-20 top-4 h-64 w-64 bg-[var(--ceem-cyan)]/20"
               style={{ animationDelay: "-6s" }}
             />
             <div
-              className="blob blob-drift absolute -right-10 bottom-0 h-56 w-56 bg-[var(--ceem-yellow)]/30"
+              className="blob blob-drift absolute -right-10 bottom-0 h-56 w-56 bg-[var(--ceem-orange)]/25"
               style={{ animationDelay: "-11s" }}
             />
             <div
-              className="blob blob-drift absolute bottom-8 left-8 h-40 w-40 bg-[var(--ceem-green)]/20"
+              className="blob blob-drift absolute bottom-8 left-8 h-40 w-40 bg-[var(--ceem-olive)]/20"
               style={{ animationDelay: "-3s" }}
             />
           </div>
@@ -78,7 +100,7 @@ export default function HomePage() {
           />
 
           <div className="relative mx-auto max-w-4xl text-center">
-            <span className="sticker-pill inline-flex items-center gap-2 bg-[var(--ceem-cyan)] px-5 py-2 text-sm font-black uppercase tracking-wide text-white">
+            <span className="sticker-pill inline-flex items-center gap-2 bg-[var(--ceem-cyan-deep)] px-5 py-2 text-sm font-black uppercase tracking-wide text-white">
               <Sparkles className="h-4 w-4" aria-hidden />
               Kínder incorporado a la SEP
             </span>
@@ -86,11 +108,15 @@ export default function HomePage() {
             {/*
              * Titular tipo calcomanía, como en la gráfica: cada
              * línea con su color de la rueda y contorno blanco.
+             * El olivo va puro; el naranja usa el tono de titular,
+             * un 3 % más oscuro, que es lo justo para cruzar el
+             * mínimo de contraste sin dejar de ser el naranja de
+             * la marca.
              */}
             <h1 className="mt-7 text-[clamp(2.5rem,9vw,5rem)] font-black uppercase leading-[0.95] tracking-tight">
               <span className="sticker-text block text-brand-primary">Aprender, crear</span>
-              <span className="sticker-text block text-[var(--ceem-orange)]">y crecer</span>
-              <span className="sticker-text block text-[var(--ceem-green)]">juntos es mejor</span>
+              <span className="sticker-text block text-[var(--ceem-orange-display)]">y crecer</span>
+              <span className="sticker-text block text-[var(--ceem-olive)]">juntos es mejor</span>
             </h1>
 
             <p className="mx-auto mt-7 max-w-2xl text-balance text-lg leading-relaxed text-brand-text/70 sm:text-xl">
@@ -117,6 +143,63 @@ export default function HomePage() {
                 WhatsApp
               </a>
             </div>
+          </div>
+        </section>
+
+        {/* ═══ Credenciales SEP ══════════════════════════════ */}
+        {/*
+         * Recrea el lockup oficial que mandó el cliente — lema en
+         * colores, línea de incorporación y las tres claves — pero
+         * como texto y no como imagen: así lo lee un buscador, se
+         * puede copiar para verificar la escuela ante la SEP y no
+         * se pixela en pantallas grandes.
+         *
+         * Va aquí arriba a propósito: es la prueba de que el kínder
+         * es oficial, que es la primera duda de un padre.
+         */}
+        <section
+          aria-labelledby="sep-titulo"
+          className="border-y-2 border-brand-muted px-4 py-12 sm:px-6"
+          style={{ backgroundColor: "color-mix(in srgb, var(--ceem-sky) 16%, #fff)" }}
+        >
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xl font-black sm:text-2xl md:text-3xl">
+              {LEMA.map(({ word, color }, index) => (
+                <span key={word} className="inline-flex items-center gap-3">
+                  {index > 0 && (
+                    <span
+                      aria-hidden
+                      className="h-1.5 w-1.5 rounded-full bg-brand-primary/50 sm:h-2 sm:w-2"
+                    />
+                  )}
+                  <span style={{ color }}>{word}</span>
+                </span>
+              ))}
+            </p>
+
+            <h2
+              id="sep-titulo"
+              className="mx-auto mt-5 max-w-2xl text-balance text-base font-bold leading-relaxed text-brand-primary sm:text-lg"
+            >
+              {SEP.incorporacion}
+            </h2>
+
+            <dl className="mt-6 flex flex-wrap items-stretch justify-center gap-3">
+              {SEP.claves.map(({ label, value }) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border-2 border-white bg-white/80 px-5 py-3 text-left shadow-[var(--ceem-sticker-shadow)]"
+                >
+                  <dt className="text-[0.65rem] font-black uppercase tracking-[0.18em] text-brand-text/55">
+                    {label}
+                  </dt>
+                  {/* tabular-nums: son claves que la gente copia dígito a dígito. */}
+                  <dd className="mt-0.5 font-black tabular-nums tracking-wide text-brand-primary">
+                    {value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 
@@ -156,7 +239,7 @@ export default function HomePage() {
                 <div
                   aria-hidden
                   className="absolute -inset-3 rotate-2 rounded-[var(--ceem-radius-card)]"
-                  style={{ backgroundColor: "color-mix(in srgb, var(--ceem-magenta) 14%, #fff)" }}
+                  style={{ backgroundColor: "color-mix(in srgb, var(--ceem-carmin) 14%, #fff)" }}
                 />
                 <Image
                   src="/images/ceem-preescolar.webp"
@@ -392,7 +475,9 @@ export default function HomePage() {
         >
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
             <div className="text-white">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--ceem-yellow)]">
+              {/* El azul del avión de papel es el único de la rueda
+                  que se lee sobre el marino (8.2:1). */}
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--ceem-sky)]">
                 Admisión
               </p>
               <h2 className="mt-3 text-3xl font-black leading-tight sm:text-4xl">
@@ -411,7 +496,7 @@ export default function HomePage() {
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 text-white/90">
                     <CheckCircle2
-                      className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ceem-yellow)]"
+                      className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ceem-sky)]"
                       aria-hidden
                     />
                     {item}
@@ -426,6 +511,93 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ═══ Pagos ═════════════════════════════════════════ */}
+        {/*
+         * Recreación de la pieza "DATOS BANCARIOS" con una omisión
+         * deliberada: el número de cuenta y la CLABE NO se publican
+         * (decisión del usuario, 3-ago-2026). Publicarlos los deja
+         * indexables y facilita el fraude de la captura alterada.
+         *
+         * Sí se publican el titular y el banco, que es la mitad que
+         * PROTEGE: le permiten a un padre darse cuenta de que le
+         * están pasando una cuenta que no es la del Centro.
+         */}
+        <section id="pagos" className="scroll-mt-24 bg-brand-muted/40 px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-3xl">
+            <header className="text-center">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
+                Pagos
+              </p>
+              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
+                Cómo realizar tu pago
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-balance text-lg leading-relaxed text-brand-text/70">
+                {PAGOS.lema}
+              </p>
+            </header>
+
+            <div className="mt-10 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-6 shadow-[var(--ceem-sticker-shadow)] sm:p-8">
+              <dl className="grid gap-4 sm:grid-cols-2">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white">
+                    <UserRound className="h-6 w-6" aria-hidden />
+                  </span>
+                  <div>
+                    <dt className="text-sm text-brand-text/55">Titular de la cuenta</dt>
+                    <dd className="font-black text-brand-primary">{PAGOS.titular}</dd>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-cyan-deep)] text-white">
+                    <Landmark className="h-6 w-6" aria-hidden />
+                  </span>
+                  <div>
+                    <dt className="text-sm text-brand-text/55">Banco</dt>
+                    <dd className="font-black text-brand-primary">{PAGOS.banco}</dd>
+                  </div>
+                </div>
+              </dl>
+
+              <div
+                className="mt-6 flex flex-col gap-4 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between"
+                style={{ backgroundColor: "color-mix(in srgb, var(--ceem-sky) 22%, #fff)" }}
+              >
+                <p className="flex items-start gap-3 text-sm leading-relaxed text-brand-primary">
+                  <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" aria-hidden />
+                  <span>
+                    Por seguridad, el número de cuenta y la CLABE no se publican. Te los enviamos
+                    por WhatsApp junto con las instrucciones.
+                  </span>
+                </p>
+                <a
+                  href={whatsappPagosUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-brand-primary px-6 py-3 text-sm font-black text-white transition-transform hover:scale-105"
+                >
+                  <MessageCircle className="h-4 w-4" aria-hidden />
+                  Solicitar datos
+                </a>
+              </div>
+
+              <ul className="mt-6 grid gap-3 border-t-2 border-brand-muted pt-6">
+                {PAGOS.condiciones.map((condicion) => (
+                  <li
+                    key={condicion}
+                    className="flex items-start gap-2.5 text-sm leading-relaxed text-brand-text/70"
+                  >
+                    <CheckCircle2
+                      className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary"
+                      aria-hidden
+                    />
+                    {condicion}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
         {/* ═══ Contacto ══════════════════════════════════════ */}
         <section id="contacto" className="scroll-mt-24 bg-white px-4 py-16 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-5xl">
@@ -433,37 +605,50 @@ export default function HomePage() {
               <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
                 Visítanos
               </p>
+              {/* Antes decía "Estamos en San Pedro Mártir, Tlalpan".
+                  Con la segunda dirección de la pieza oficial ya no
+                  es cierto, y como no sabemos qué es esa sede, el
+                  titular no afirma nada de más. */}
               <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
-                Estamos en San Pedro Mártir, Tlalpan
+                Dónde encontrarnos
               </h2>
             </header>
 
-            <div className="mt-10 grid gap-5 lg:grid-cols-[1.3fr_1fr]">
-              <article className="flex flex-col gap-5 rounded-[var(--ceem-radius-card)] bg-brand-muted/50 p-7 sm:flex-row sm:p-8">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white">
-                  <MapPin className="h-7 w-7" aria-hidden />
-                </span>
-                <div>
-                  <h3 className="text-xl font-black text-brand-primary">{CONTACT.name}</h3>
-                  <p className="mt-2 leading-relaxed text-brand-text/70">{CONTACT.address}</p>
-                  <a
-                    href={CONTACT.mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-1.5 font-black text-brand-secondary hover:underline"
+            <div className="mt-10 grid items-start gap-5 lg:grid-cols-[1.3fr_1fr]">
+              {/* Las dos direcciones de la pieza oficial. La segunda
+                  se lista sin rotularla como plantel: ver SEDES. */}
+              <div className="grid content-start gap-5">
+                {SEDES.map((sede) => (
+                  <article
+                    key={sede.id}
+                    className="flex flex-col gap-5 rounded-[var(--ceem-radius-card)] bg-brand-muted/50 p-7 sm:flex-row sm:p-8"
                   >
-                    Ver en Google Maps
-                    <ArrowRight className="h-4 w-4" aria-hidden />
-                  </a>
-                </div>
-              </article>
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white">
+                      <MapPin className="h-7 w-7" aria-hidden />
+                    </span>
+                    <div>
+                      <h3 className="text-xl font-black text-brand-primary">{sede.label}</h3>
+                      <p className="mt-2 leading-relaxed text-brand-text/70">{sede.address}</p>
+                      <a
+                        href={sede.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-1.5 font-black text-brand-secondary hover:underline"
+                      >
+                        Ver en Google Maps
+                        <ArrowRight className="h-4 w-4" aria-hidden />
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
 
-              <div className="grid gap-4">
+              <div className="grid content-start gap-4">
                 <a
                   href={CONTACT.phoneHref}
                   className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--ceem-blue)] text-white">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-navy-deep)] text-white">
                     <Phone className="h-5 w-5" aria-hidden />
                   </span>
                   <span>
@@ -478,7 +663,7 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--ceem-green)] text-white">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-olive-deep)] text-white">
                     <MessageCircle className="h-5 w-5" aria-hidden />
                   </span>
                   <span>
@@ -490,32 +675,196 @@ export default function HomePage() {
                 </a>
 
                 <a
+                  href={CONTACT.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
+                >
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-carmin-deep)] text-white">
+                    <Instagram className="h-5 w-5" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="block text-sm text-brand-text/55">Instagram</span>
+                    <span className="block font-black text-brand-primary">
+                      {CONTACT.instagram}
+                    </span>
+                  </span>
+                </a>
+
+                {/*
+                 * La pieza oficial da el nombre de la página de
+                 * Facebook pero no su URL, así que el clic va al
+                 * Linktree, que sí está verificado, en vez de a una
+                 * dirección adivinada.
+                 */}
+                <a
                   href={CONTACT.linktree}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--ceem-magenta)] text-white">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-purple-deep)] text-white">
+                    <Facebook className="h-5 w-5" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="block text-sm text-brand-text/55">Facebook</span>
+                    <span className="block font-black text-brand-primary">
+                      {CONTACT.facebook}
+                    </span>
+                  </span>
+                </a>
+
+                <a
+                  href={CONTACT.linktree}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
+                >
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--ceem-orange-deep)] text-white">
                     <Link2 className="h-5 w-5" aria-hidden />
                   </span>
                   <span>
-                    <span className="block text-sm text-brand-text/55">Redes sociales</span>
-                    <span className="block font-black text-brand-primary">Todos nuestros enlaces</span>
+                    <span className="block text-sm text-brand-text/55">Todos nuestros enlaces</span>
+                    <span className="block font-black text-brand-primary">Linktree</span>
                   </span>
                 </a>
               </div>
             </div>
           </div>
         </section>
+
+        {/* ═══ Colaboradores ═════════════════════════════════ */}
+        {/*
+         * Recreación de la pieza "DOCUMENTACIÓN".
+         *
+         * ⚠ La pieza no dice para quién es, pero pide CV con
+         * fotografía, RFC, cédula o título y reglamento de uniforme
+         * firmado: es documentación de PERSONAL, no de inscripción
+         * de alumnos. Por eso va aquí abajo, con su propio rótulo y
+         * fuera del menú principal — un padre que la leyera dentro
+         * de Admisión entendería que le piden un título profesional
+         * para inscribir a su hijo de tres años.
+         */}
+        <section
+          id="colaboradores"
+          className="scroll-mt-24 bg-brand-muted/40 px-4 py-16 sm:px-6 sm:py-24"
+        >
+          <div className="mx-auto max-w-5xl">
+            <header className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
+                Trabaja con nosotros
+              </p>
+              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
+                Documentación para colaboradores
+              </h2>
+              <p className="mt-4 text-balance text-lg leading-relaxed text-brand-text/70">
+                Si te integras al equipo del Centro Educativo, esto es lo que necesitamos de ti.{" "}
+                <strong className="text-brand-primary">
+                  No son los documentos para inscribir a un alumno
+                </strong>
+                : para eso escríbenos y te pasamos la lista que corresponde.
+              </p>
+            </header>
+
+            <ul className="mt-12 grid gap-3 sm:grid-cols-2">
+              {DOCUMENTOS_COLABORADOR.map((doc) => (
+                <li
+                  key={doc.name}
+                  className="flex items-start gap-4 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-5 shadow-[var(--ceem-sticker-shadow)]"
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white"
+                    style={{ backgroundColor: doc.color }}
+                  >
+                    <Icon name={doc.icon} className="h-5 w-5" />
+                  </span>
+                  <div className="flex-1">
+                    <p className="font-black leading-tight text-brand-primary">{doc.name}</p>
+                    {doc.detail && (
+                      <p className="mt-1 text-sm leading-snug text-brand-text/60">{doc.detail}</p>
+                    )}
+                  </div>
+                  <span className="shrink-0 rounded-full bg-brand-muted px-3 py-1 text-xs font-black uppercase tracking-wide text-brand-primary">
+                    {doc.copies}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 text-center">
+              {/* El cierre de la pieza original. */}
+              <p className="text-2xl font-black text-brand-primary sm:text-3xl">
+                Juntos construimos{" "}
+                <span className="text-[var(--ceem-orange-display)]">su mejor futuro</span>
+              </p>
+              <a
+                href={whatsappVacantesUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sticker-pill mt-6 inline-flex items-center justify-center gap-2 bg-brand-primary px-7 py-4 text-base font-black text-white transition-transform hover:scale-105"
+              >
+                <MessageCircle className="h-5 w-5" aria-hidden />
+                Quiero postularme
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <footer className="bg-brand-primary px-4 py-10 text-center text-sm text-white/60 sm:px-6">
-        <Wordmark tone="white" className="items-center" />
-        <p className="mt-3 font-black text-white">{CONTACT.name}</p>
-        <p className="mt-2">{CONTACT.address}</p>
-        <p className="mt-4 text-xs">
-          © {new Date().getFullYear()} EducaMates. Todos los derechos reservados.
-        </p>
+      <footer className="bg-brand-primary px-4 py-12 text-sm text-white/65 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <div className="flex flex-col items-center gap-6 text-center">
+            {/* El logotipo es multicolor y lleva una estela negra:
+                sobre el marino va en su pastilla blanca. */}
+            <Wordmark variant="chip" className="w-[190px]" />
+
+            <div>
+              <p className="font-black text-white">{CONTACT.name}</p>
+              <p className="mt-2 max-w-md leading-relaxed">{SEP.incorporacion}</p>
+            </div>
+
+            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs">
+              {SEP.claves.map(({ label, value }) => (
+                <li key={label}>
+                  <span className="font-black uppercase tracking-[0.14em] text-white/50">
+                    {label}
+                  </span>{" "}
+                  <span className="font-black tabular-nums text-white">{value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-10 grid gap-6 border-t border-white/15 pt-8 sm:grid-cols-2">
+            <ul className="grid gap-1.5">
+              {SEDES.map((sede) => (
+                <li key={sede.id} className="leading-relaxed">
+                  <span className="font-black text-white/85">{sede.label}:</span> {sede.address}
+                </li>
+              ))}
+            </ul>
+
+            <nav className="flex flex-col gap-1.5 sm:items-end sm:text-right">
+              {NAV_SECUNDARIA.map((item) => (
+                <a key={item.href} href={item.href} className="hover:text-white hover:underline">
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href={CONTACT.linktree}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white hover:underline"
+              >
+                Redes sociales
+              </a>
+            </nav>
+          </div>
+
+          <p className="mt-8 text-center text-xs text-white/45">
+            © {new Date().getFullYear()} EducaMates. Todos los derechos reservados.
+          </p>
+        </div>
       </footer>
     </>
   );

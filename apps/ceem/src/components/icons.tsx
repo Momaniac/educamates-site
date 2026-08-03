@@ -1,15 +1,26 @@
 import {
+  Award,
   Baby,
+  BadgeCheck,
   BookOpen,
   Brain,
+  Briefcase,
   Clock,
+  FilePen,
+  Footprints,
+  GraduationCap,
   HeartHandshake,
+  House,
+  IdCard,
   Languages,
   type LucideIcon,
   Medal,
   Puzzle,
   School,
+  ScrollText,
   ShieldCheck,
+  Shirt,
+  Stethoscope,
   Users,
   Utensils,
 } from "lucide-react";
@@ -33,6 +44,20 @@ const ICONS: Record<string, LucideIcon> = {
   shield: ShieldCheck,
   users: Users,
   utensils: Utensils,
+
+  /* Checklist de documentación para colaboradores. */
+  badge: BadgeCheck,
+  briefcase: Briefcase,
+  certificate: Award,
+  footprints: Footprints,
+  graduation: GraduationCap,
+  handshake: HeartHandshake,
+  house: House,
+  id: IdCard,
+  medical: Stethoscope,
+  receipt: ScrollText,
+  shirt: Shirt,
+  signature: FilePen,
 };
 
 interface IconProps {

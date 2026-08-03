@@ -34,8 +34,11 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-brand-muted bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <a href="#top" className="shrink-0" aria-label={`${CONTACT.name} — inicio`}>
-          <Wordmark />
+        <a href="#top" className="flex shrink-0 items-center" aria-label={`${CONTACT.name} — inicio`}>
+          {/* Ancho contenido: el logotipo es muy apaisado (2.6:1) y
+              por encima de ~190px empuja la navegación fuera en las
+              pantallas medias. */}
+          <Wordmark priority className="w-[142px] sm:w-[178px]" />
         </a>
 
         <nav className="hidden items-center gap-1 lg:flex">
@@ -81,7 +84,7 @@ export function SiteHeader() {
       {open && (
         <div className="fixed inset-0 z-50 bg-white lg:hidden" role="dialog" aria-modal="true">
           <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-            <Wordmark />
+            <Wordmark className="w-[142px] sm:w-[178px]" />
             <button
               type="button"
               onClick={() => setOpen(false)}
