@@ -1,10 +1,12 @@
 import {
   ArrowRight,
   CheckCircle2,
+  Clock,
   Facebook,
   Instagram,
   Landmark,
   Link2,
+  Mail,
   MapPin,
   MessageCircle,
   Phone,
@@ -21,22 +23,41 @@ import { Wordmark } from "@/components/wordmark";
 import {
   BENEFICIOS,
   CONTACT,
+  COSTOS,
+  CURSOS_ESPECIALES,
+  DISTINTIVOS,
+  DOCUMENTOS_ALUMNO,
   DOCUMENTOS_COLABORADOR,
   ENFOQUE,
+  HORARIOS,
   ILUSTRACIONES,
+  INCLUSION,
   LEMA,
   NAV_SECUNDARIA,
   NIVELES,
   PAGOS,
+  PROCESO_INSCRIPCION,
+  PROMOCIONES,
+  REGULARIZACION,
   SEDES,
   SEP,
   SERVICIOS,
   TALLERES,
 } from "@/lib/site";
 
-const whatsappUrl = buildWhatsAppUrl({
+/*
+ * El enlace corto de WhatsApp Business que dio el cliente: es la
+ * dirección oficial que comparte en su propaganda y la que pidió
+ * para el botón principal. Los enlaces con mensaje prellenado no
+ * pueden usarlo (no aceptan ?text=), así que esos siguen armados
+ * desde el número verificado.
+ */
+const whatsappUrl = CONTACT.whatsappUrl;
+
+/* Mensajes contextuales con texto prellenado: van por número. */
+const whatsappInscripcionUrl = buildWhatsAppUrl({
   phone: CONTACT.whatsappNumber,
-  message: `Hola, me gustaría recibir información sobre ${CONTACT.name}.`,
+  message: `Hola, me interesa inscribir a mi hijo(a) en ${CONTACT.name}. Quisiera información de la inscripción y las colegiaturas.`,
 });
 
 /* Los datos de cuenta no se publican: se piden por aquí. */
@@ -200,6 +221,23 @@ export default function HomePage() {
                 </div>
               ))}
             </dl>
+
+            {/*
+             * Distintivos institucionales (17-ago-2026): la otra
+             * mitad de la credencial. Las claves dicen QUÉ es; esto
+             * dice QUIÉN la supervisa.
+             */}
+            <ul className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+              {DISTINTIVOS.map((distintivo) => (
+                <li
+                  key={distintivo.label}
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-white bg-white/80 px-4 py-2 text-sm font-black text-brand-primary shadow-[var(--ceem-sticker-shadow)]"
+                >
+                  <Icon name={distintivo.icon} className="h-4 w-4 text-brand-secondary" />
+                  {distintivo.label}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -351,6 +389,40 @@ export default function HomePage() {
                 </article>
               ))}
             </div>
+
+            {/* ── Horarios ── */}
+            {/*
+             * Las tres modalidades oficiales (17-ago-2026). Van
+             * dentro de Niveles porque responden la pregunta
+             * siguiente: ya sé el nivel, ¿cómo es la jornada?
+             */}
+            <div className="mt-16">
+              <header className="mx-auto max-w-3xl text-center">
+                <h3 className="text-3xl font-black text-brand-primary sm:text-3xl">
+                  Tres horarios para tu familia
+                </h3>
+                <p className="mt-3 text-lg leading-relaxed text-brand-text/70">
+                  La misma calidad educativa en tres jornadas distintas.
+                </p>
+              </header>
+              <div className="mt-8 grid gap-5 md:grid-cols-3">
+                {HORARIOS.map((horario) => (
+                  <article
+                    key={horario.name}
+                    className="rounded-[var(--ceem-radius-card)] p-7 text-center"
+                    style={{ backgroundColor: horario.color, color: horario.ink }}
+                  >
+                    <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-black/10">
+                      <Icon name={horario.icon} className="h-7 w-7" />
+                    </span>
+                    <h4 className="mt-5 text-xl font-black leading-tight">{horario.name}</h4>
+                    {/* tabular-nums: horas que se copian. */}
+                    <p className="mt-2 text-2xl font-black tabular-nums">{horario.horas}</p>
+                    <p className="mt-2 text-sm leading-relaxed opacity-85">{horario.comedor}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -382,28 +454,56 @@ export default function HomePage() {
                   <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
                     {taller.description}
                   </p>
+                  {taller.horario && (
+                    <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-brand-muted px-3 py-1.5 text-xs font-black text-brand-primary">
+                      <Clock className="h-3.5 w-3.5" aria-hidden />
+                      {taller.horario}
+                    </p>
+                  )}
                 </article>
               ))}
 
               {/*
-               * El cliente dijo "club de tareas, taekwondo, etc.".
-               * En vez de inventar el "etc.", se dice abiertamente.
+               * Cursos especiales y regularización (17-ago-2026):
+               * el "etc." de la reunión ya tiene nombre. Los cursos
+               * usan los mismos horarios del programa académico y
+               * completo, que viven en su propia sección.
                */}
-              <article className="flex flex-col justify-center rounded-[var(--ceem-radius-card)] border-2 border-dashed border-brand-primary/25 bg-white/60 p-6 text-center">
-                <p className="text-lg font-black text-brand-primary">Y más talleres</p>
-                <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
-                  Pregúntanos por la lista completa del ciclo escolar en curso.
-                </p>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center justify-center gap-1.5 text-sm font-black text-brand-secondary hover:underline"
+              {CURSOS_ESPECIALES.map((curso) => (
+                <article
+                  key={curso.name}
+                  className="rounded-[var(--ceem-radius-card)] bg-white p-6 shadow-[var(--ceem-sticker-shadow)]"
                 >
-                  Consultar
-                  <ArrowRight className="h-4 w-4" aria-hidden />
-                </a>
-              </article>
+                  <span
+                    className="flex h-14 w-14 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: curso.color, color: curso.ink }}
+                  >
+                    <Icon name={curso.icon} className="h-7 w-7" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-black text-brand-primary">{curso.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
+                    {curso.description}
+                  </p>
+                </article>
+              ))}
+
+              {REGULARIZACION.map((programa) => (
+                <article
+                  key={programa.name}
+                  className="rounded-[var(--ceem-radius-card)] bg-white p-6 shadow-[var(--ceem-sticker-shadow)]"
+                >
+                  <span
+                    className="flex h-14 w-14 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: programa.color, color: programa.ink }}
+                  >
+                    <Icon name={programa.icon} className="h-7 w-7" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-black text-brand-primary">{programa.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
+                    {programa.description}
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -437,6 +537,38 @@ export default function HomePage() {
                 </article>
               ))}
             </div>
+
+            {/* ── Educación inclusiva ── */}
+            {/*
+             * Texto literal del cliente (17-ago-2026). Tema
+             * sensible: redacción exacta, sin paráfrasis. Un
+             * personaje acompaña el bloque, como pidió el cliente.
+             */}
+            <div
+              id="inclusion"
+              className="scroll-mt-24 mt-16 grid items-center gap-8 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-7 shadow-[var(--ceem-sticker-shadow)] lg:grid-cols-[auto_1fr] lg:gap-12 sm:p-9"
+            >
+              <Image
+                src="/ilustraciones/completos/nino-afro.png"
+                alt="Niño de EducaMates sonriendo, acompañando el mensaje de educación inclusiva"
+                width={200}
+                height={240}
+                className="soft-bounce mx-auto h-40 w-auto object-contain"
+              />
+              <div>
+                <p className="text-sm font-black uppercase tracking-[.2em] text-brand-secondary">
+                  Nuestro compromiso
+                </p>
+                <h3 className="mt-2 text-2xl font-black leading-tight text-brand-primary sm:text-3xl">
+                  {INCLUSION.titulo}
+                </h3>
+                <div className="mt-4 space-y-4 text-base leading-relaxed text-brand-text/70">
+                  {INCLUSION.parrafos.map((parrafo) => (
+                    <p key={parrafo.slice(0, 40)}>{parrafo}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -468,46 +600,187 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ═══ Promociones ════════════════════════════════════ */}
+        {/*
+         * [OFICIAL 17-ago-2026] El cliente pidió personajes de CEEM
+         * con mensajes llamativos "a lo largo del sitio" para hacerlo
+         * más dinámico e incrementar conversiones. Los cinco mensajes
+         * son literales; cada tarjeta abre WhatsApp con un mensaje
+         * contextual en vez de un enlace genérico.
+         */}
+        <section
+          id="promociones"
+          className="scroll-mt-24 overflow-hidden bg-brand-muted/40 px-4 py-16 sm:px-6 sm:py-20"
+        >
+          <div className="mx-auto max-w-6xl">
+            <header className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
+                Promociones
+              </p>
+              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
+                Lo que queremos que sepas
+              </h2>
+            </header>
+
+            <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {PROMOCIONES.map((promo, index) => (
+                <li key={promo.mensaje}>
+                  <a
+                    href={buildWhatsAppUrl({
+                      phone: CONTACT.whatsappNumber,
+                      message: promo.whatsappMensaje,
+                    })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-full flex-col items-center rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-5 text-center shadow-[var(--ceem-sticker-shadow)] transition-transform hover:scale-[1.03]"
+                  >
+                    <Image
+                      src={promo.ilustracion}
+                      alt={promo.ilustracionAlt}
+                      width={200}
+                      height={240}
+                      className="soft-bounce h-28 w-auto object-contain sm:h-32"
+                      style={{ animationDelay: `${index * 0.4}s` }}
+                    />
+                    <span className="mt-4 text-sm font-black leading-snug text-brand-primary sm:text-base">
+                      {promo.mensaje}
+                      </span>
+                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-black text-brand-secondary">
+                      <MessageCircle className="h-3.5 w-3.5" aria-hidden />
+                      Escríbenos
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* ═══ Admisión ══════════════════════════════════════ */}
+        {/*
+         * Reestructurada el 17-ago-2026 con el proceso oficial del
+         * cliente: contacto → verificación de edad → documentación.
+         * La cuota de inscripción es el único costo público; las
+         * colegiaturas se dan por WhatsApp con atención
+         * personalizada (decisión del cliente).
+         */}
         <section
           id="admision"
           className="scroll-mt-24 bg-brand-primary px-4 py-16 sm:px-6 sm:py-24"
         >
-          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-            <div className="text-white">
+          <div className="mx-auto max-w-5xl">
+            <header className="mx-auto max-w-3xl text-center">
               {/* El azul del avión de papel es el único de la rueda
                   que se lee sobre el marino (8.2:1). */}
               <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--ceem-sky)]">
                 Admisión
               </p>
-              <h2 className="mt-3 text-3xl font-black leading-tight sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-black leading-tight text-white sm:text-4xl">
                 Conoce el Centro por dentro
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-white/80">
                 Déjanos tus datos y te contactamos para agendar una visita, resolver dudas y
                 explicarte el proceso de inscripción.
               </p>
+            </header>
 
-              <ul className="mt-7 grid gap-3">
-                {[
-                  "Te respondemos el mismo día",
-                  "Sin compromiso de inscripción",
-                  "Puedes venir a conocer las instalaciones",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-white/90">
-                    <CheckCircle2
-                      className="mt-0.5 h-5 w-5 shrink-0 text-[var(--ceem-sky)]"
-                      aria-hidden
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* ── El proceso, tal cual lo dictó el cliente ── */}
+            <ol className="mt-12 grid gap-5 md:grid-cols-3">
+              {PROCESO_INSCRIPCION.map((paso) => (
+                <li
+                  key={paso.numero}
+                  className="rounded-[var(--ceem-radius-card)] bg-white/10 p-6 ring-1 ring-white/15"
+                >
+                  <span className="sticker-pill inline-flex h-11 w-11 items-center justify-center bg-brand-secondary text-lg font-black text-white">
+                    {paso.numero}
+                  </span>
+                  <h3 className="mt-4 text-lg font-black leading-tight text-white">
+                    {paso.titulo}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/75">{paso.description}</p>
+                </li>
+              ))}
+            </ol>
 
-            <div className="rounded-[var(--ceem-radius-card)] bg-white p-6 shadow-2xl sm:p-8">
-              <AdmisionForm />
+            {/* ── Cuota de inscripción + formulario ── */}
+            <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+              <div className="text-white">
+                {/*
+                 * Único costo público del sitio. Al seleccionarlo,
+                 * WhatsApp con atención personalizada.
+                 */}
+                <div className="rounded-[var(--ceem-radius-card)] bg-white/10 p-7 ring-1 ring-white/15">
+                  <p className="text-sm font-black uppercase tracking-[0.18em] text-[var(--ceem-sky)]">
+                    {COSTOS.inscripcion.nota}
+                  </p>
+                  <p className="mt-2 flex items-baseline gap-2">
+                    <span className="text-5xl font-black tabular-nums text-white">
+                      {COSTOS.inscripcion.monto}
+                    </span>
+                    <span className="text-lg font-black text-white/60">
+                      {COSTOS.inscripcion.moneda}
+                    </span>
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-white/75">
+                    {COSTOS.colegiaturas.mensaje}
+                  </p>
+                  <a
+                    href={whatsappInscripcionUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sticker-pill mt-5 inline-flex items-center gap-2 bg-brand-secondary px-6 py-3.5 text-sm font-black text-white transition-transform hover:scale-105"
+                  >
+                    <MessageCircle className="h-4 w-4" aria-hidden />
+                    Quiero información de costos
+                  </a>
+                </div>
+              </div>
+
+              <div className="rounded-[var(--ceem-radius-card)] bg-white p-6 shadow-2xl sm:p-8">
+                <AdmisionForm />
+              </div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══ Documentación para inscribir ══════════════════ */}
+        {/*
+         * La lista real PARA LAS FAMILIAS (17-ago-2026). Vive
+         * después de Admisión porque es el paso 3 del proceso. La
+         * de colaboradores sigue en su propia sección, más abajo.
+         */}
+        <section className="bg-brand-muted/40 px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-5xl">
+            <header className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
+                Inscripción
+              </p>
+              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
+                Documentos para inscribir a tu hijo
+              </h2>
+            </header>
+
+            <ul className="mt-12 grid gap-3 sm:grid-cols-2">
+              {DOCUMENTOS_ALUMNO.map((doc) => (
+                <li
+                  key={doc.name}
+                  className="flex items-start gap-4 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-5 shadow-[var(--ceem-sticker-shadow)]"
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white"
+                    style={{ backgroundColor: doc.color }}
+                  >
+                    <Icon name={doc.icon} className="h-5 w-5" />
+                  </span>
+                  <div className="flex-1">
+                    <p className="font-black leading-tight text-brand-primary">{doc.name}</p>
+                    {doc.detail && (
+                      <p className="mt-1 text-sm leading-snug text-brand-text/60">{doc.detail}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -671,6 +944,20 @@ export default function HomePage() {
                     <span className="block font-black text-brand-primary">
                       {CONTACT.whatsappDisplay}
                     </span>
+                  </span>
+                </a>
+
+                {/* [OFICIAL 17-ago-2026] Correo oficial de CEEM. */}
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  className="flex items-center gap-4 rounded-[var(--ceem-radius-card)] border-2 border-brand-muted p-5 transition-colors hover:border-brand-secondary"
+                >
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-primary text-white">
+                    <Mail className="h-5 w-5" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="block text-sm text-brand-text/55">Correo</span>
+                    <span className="block font-black text-brand-primary">{CONTACT.email}</span>
                   </span>
                 </a>
 

@@ -5,8 +5,10 @@ import {
   BookOpen,
   Brain,
   Briefcase,
+  Camera,
   Clock,
   FilePen,
+  Flower2,
   Footprints,
   GraduationCap,
   HeartHandshake,
@@ -20,7 +22,11 @@ import {
   ScrollText,
   ShieldCheck,
   Shirt,
+  Snowflake,
   Stethoscope,
+  Sun,
+  Sunrise,
+  Sunset,
   Users,
   Utensils,
 } from "lucide-react";
@@ -48,6 +54,7 @@ const ICONS: Record<string, LucideIcon> = {
   /* Checklist de documentación para colaboradores. */
   badge: BadgeCheck,
   briefcase: Briefcase,
+  camera: Camera,
   certificate: Award,
   footprints: Footprints,
   graduation: GraduationCap,
@@ -58,6 +65,13 @@ const ICONS: Record<string, LucideIcon> = {
   receipt: ScrollText,
   shirt: Shirt,
   signature: FilePen,
+
+  /* Horarios, cursos y promociones (17-ago-2026). */
+  flower: Flower2,
+  snowflake: Snowflake,
+  sun: Sun,
+  sunrise: Sunrise,
+  sunset: Sunset,
 };
 
 interface IconProps {

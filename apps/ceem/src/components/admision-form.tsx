@@ -130,7 +130,7 @@ export function AdmisionForm() {
 
       <p className="text-center text-xs leading-relaxed text-brand-text/55">
         Al enviar, se abrirá WhatsApp con tus datos listos para que confirmes el mensaje al{" "}
-        {CONTACT.whatsappDisplay}.
+        {CONTACT.whatsappDisplay}. También puedes escribirnos a {CONTACT.email}.
       </p>
     </form>
   );

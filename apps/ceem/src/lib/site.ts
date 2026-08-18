@@ -21,36 +21,52 @@
 /*
  * [OFICIAL] Datos de contacto del Centro Educativo.
  *
- * El WhatsApp cambió el 3-ago-2026: la pieza oficial dice
- * 56 3555 5558 y manda ella. El sitio llevaba desde junio el
- * …5598, que también estaba registrado como número de CEEM (el de
- * la fundación es otro, 5215561852213), así que no es que se
- * hubiera colado el de EMF: son dos números de la misma marca que
- * difieren en dos dígitos. Uno de los dos es una errata, y ante la
- * duda vale el de la propaganda que el cliente está repartiendo.
- * Queda pendiente su confirmación en voz.
+ * El WhatsApp se resolvió el 17-ago-2026. Hubo dos números en
+ * disputa desde junio: …5598 (el que el sitio llevaba) y …5558 (el
+ * de la pieza de datos bancarios, por el que se cambió el 3-ago).
+ * Ese cambio rompió el botón: el cliente reportó que no redirigía
+ * al contacto de CEEM. El enlace corto oficial que dio el cliente
+ * (wa.me/message/GBGRRD5C3VBQH1) resuelve internamente a
+ * 5215635555598 — el …5598 de siempre. La errata estaba en la
+ * pieza bancaria.
+ *
+ * El botón principal usa el enlace corto porque es la dirección
+ * que comparte el propio cliente en su propaganda; el número
+ * sigue existiendo para construir los mensajes con ?text=
+ * prellenado (los enlaces cortos no aceptan texto prellenado).
  */
 export const CONTACT = {
   name: "Centro Educativo EducaMates",
   short: "CEEM",
   phone: "55 5655 4228",
   phoneHref: "tel:5556554228",
-  whatsappNumber: "5215635555558",
-  whatsappDisplay: "+52 56 3555 5558",
+  /** [OFICIAL] Enlace corto de WhatsApp Business que compartió el cliente. */
+  whatsappUrl: "https://wa.me/message/GBGRRD5C3VBQH1",
+  /** [OFICIAL] Respaldo del enlace corto; para armar mensajes prellenados. */
+  whatsappNumber: "5215635555598",
+  whatsappDisplay: "+52 56 3555 5598",
+  /** [OFICIAL] Correo oficial de CEEM, dado por el cliente el 17-ago-2026. */
+  email: "hola@educamates.edu.mx",
   /** [EMF] Dirección del Centro; el enlace de Maps lo dio el cliente. */
   address:
     "Cam. Viejo a San Pedro Mártir 315, San Pedro Mártir, Tlalpan, 14640 Ciudad de México, CDMX",
   mapsUrl: "https://maps.app.goo.gl/1BGvRnU6vjtPFM6w7",
-  /** [REUNIÓN] Linktree oficial que compartió el cliente. */
+  /**
+   * [REUNIÓN] Linktree oficial que compartió el cliente.
+   * [OFICIAL 17-ago-2026] "Por el momento, las redes sociales
+   * pueden direccionarse únicamente al Linktree": TODAS las redes
+   * apuntan aquí. El usuario de Instagram se conserva como dato
+   * visible (viene de la pieza oficial), pero su clic también va
+   * al Linktree en vez de directo a instagram.com.
+   */
   linktree: "https://linktr.ee/CEEM_",
   /** [OFICIAL] Usuario de Instagram tal cual aparece en la pieza. */
   instagram: "@somosCEEM",
-  instagramUrl: "https://www.instagram.com/somosceem",
+  instagramUrl: "https://linktr.ee/CEEM_",
   /**
    * [OFICIAL] Nombre de la página de Facebook. La pieza da el
-   * nombre pero no la URL, así que no se enlaza directo: el clic
-   * va al Linktree, que sí es un enlace verificado.
-   * ⚠ [PENDIENTE] Pedir la URL de Facebook.
+   * nombre pero no la URL, y el cliente pidió que las redes vayan
+   * al Linktree, así que el clic va ahí.
    */
   facebook: "Centro Educativo Educa Mates",
 } as const;
@@ -109,6 +125,67 @@ export const SEP = {
     { label: "Acuerdo", value: "PRER-09150053CT" },
   ],
 } as const;
+
+export interface Distintivo {
+  readonly label: string;
+  readonly icon: string;
+}
+
+/*
+ * [OFICIAL 17-ago-2026] Los cuatro distintivos institucionales que
+ * el cliente pidió destacar, tal cual los escribió. Van junto a las
+ * claves de la SEP porque son la misma credencial: la prueba de que
+ * el Centro es oficial y supervisado.
+ */
+export const DISTINTIVOS: readonly Distintivo[] = [
+  { label: "Escuela supervisada por la SEP", icon: "school" },
+  { label: "Escuela supervisada por el DIF", icon: "heart" },
+  { label: "Incorporación oficial ante la SEP", icon: "certificate" },
+  { label: "Escuela Segura de la Zona", icon: "shield" },
+];
+
+export interface Horario {
+  readonly name: string;
+  readonly horas: string;
+  readonly comedor: string;
+  readonly icon: string;
+  readonly color: string;
+  /** Tinta legible sobre ese color (ver palette-ceem.css). */
+  readonly ink: string;
+}
+
+/*
+ * [OFICIAL 17-ago-2026] Las tres modalidades de horario, horas y
+ * comedor tal cual las dio el cliente. Las edades de la escalera de
+ * niveles y estas jornadas son las dos preguntas que todo padre
+ * hace primero.
+ */
+export const HORARIOS: readonly Horario[] = [
+  {
+    name: "Horario Académico",
+    horas: "8:45 a 13:30 h",
+    comedor: "No incluye comedor.",
+    icon: "sunrise",
+    color: "var(--ceem-cyan-deep)",
+    ink: "var(--ceem-on-cyan)",
+  },
+  {
+    name: "Horario Completo",
+    horas: "7:45 a 16:00 h",
+    comedor: "Incluye comedor (3 tiempos de alimentos).",
+    icon: "sun",
+    color: "var(--ceem-orange-deep)",
+    ink: "var(--ceem-on-orange)",
+  },
+  {
+    name: "Horario Extendido",
+    horas: "7:45 a 18:00 h",
+    comedor: "Incluye comedor (4 tiempos de alimentos).",
+    icon: "sunset",
+    color: "var(--ceem-purple-deep)",
+    ink: "var(--ceem-on-purple)",
+  },
+];
 
 /*
  * [OFICIAL] El lema de la marca. No es una frase suelta: cada
@@ -169,7 +246,7 @@ export const NAV_SECUNDARIA: readonly NavItem[] = [
 export interface Nivel {
   readonly id: string;
   readonly name: string;
-  /** ⚠ [PENDIENTE] Rango de edad por nivel — confirmar con el cliente. */
+  /** [OFICIAL] Edad por nivel, confirmada por el cliente el 17-ago-2026. */
   readonly edad: string;
   readonly description: string;
   /** Superficie de la rueda de CEEM (familia `-deep`, apta para texto). */
@@ -183,24 +260,23 @@ export interface Nivel {
 
 /*
  * [REUNIÓN] "Oferta desde prematernal hasta preescolar 3".
- * [EMF] El dato global sí está verificado: se atiende desde los
- * 45 días de nacidos hasta los 5 años.
+ * [OFICIAL 17-ago-2026] Edades por nivel confirmadas por escrito
+ * por el cliente: Pre Maternal desde los 45 días; Maternal de 1 a
+ * 2 años; Preescolar 1: 3 años; Preescolar 2: 4 años; Preescolar
+ * 3: 5 años. Coinciden con la interpretación provisional, que ya
+ * no es interpretación.
  *
  * Los cinco niveles toman los cinco colores del lema en su orden
  * oficial — Únicos, Plenos, Completos, Perfectos, Felices — para
  * que la escalera de niveles y la marca digan lo mismo.
- *
- * ⚠ Los rangos de edad POR NIVEL son una interpretación de ese
- * rango global. Un padre los lee como información oficial, así
- * que hay que confirmarlos antes de publicar.
  */
 export const NIVELES: readonly Nivel[] = [
   {
     id: "prematernal",
     ilustracion: "/ilustraciones/completos/bebe-nina.png",
     ilustracionAlt: "Bebé con mameluco de EducaMates",
-    name: "Prematernal",
-    edad: "Desde 45 días",
+    name: "Pre Maternal",
+    edad: "Desde 45 días de nacido",
     description:
       "Los primeros meses, con acompañamiento cercano y personal especializado en la etapa más temprana.",
     color: "var(--ceem-carmin-deep)",
@@ -211,7 +287,7 @@ export const NIVELES: readonly Nivel[] = [
     ilustracion: "/ilustraciones/completos/bebe-nino.png",
     ilustracionAlt: "Bebé pequeño con mameluco de EducaMates",
     name: "Maternal",
-    edad: "1 a 2 años",
+    edad: "De 1 a 2 años",
     description:
       "Juego, movimiento y lenguaje. Empiezan los hábitos, la convivencia y el descubrimiento del entorno.",
     color: "var(--ceem-orange-deep)",
@@ -368,35 +444,98 @@ export const ENFOQUE: readonly Enfoque[] = [
 export interface Taller {
   readonly name: string;
   readonly description: string;
+  /** Horarios oficiales del taller, si los hay. */
+  readonly horario?: string;
   readonly icon: string;
   readonly color: string;
   /** Tinta legible sobre ese color (ver palette-ceem.css). */
   readonly ink: string;
-  /** false = aún no confirmado por el cliente, se muestra como tal. */
-  readonly confirmed: boolean;
 }
 
 /*
- * [REUNIÓN] "Clases extracurriculares (club de tareas, taekwondo,
- * etc.)". Solo esos dos están confirmados; el "etc." implica más,
- * pero no se inventan: la tarjeta final lo dice abiertamente.
+ * [OFICIAL 17-ago-2026] Talleres con sus horarios tal cual los dio
+ * el cliente. Antes solo estaban confirmados de palabra ("club de
+ * tareas, taekwondo, etc.") y la tercera tarjeta pedía la lista
+ * completa: ya llegó.
  */
 export const TALLERES: readonly Taller[] = [
   {
-    name: "Club de tareas",
-    description: "Acompañamiento para hacer la tarea en el Centro, con apoyo de las maestras.",
-    icon: "book",
-    color: "var(--ceem-orange-deep)",
-    ink: "var(--ceem-on-orange)",
-    confirmed: true,
-  },
-  {
     name: "Taekwondo",
     description: "Disciplina, coordinación y confianza a través del deporte.",
+    horario: "Martes y jueves · 15:00 a 16:00 h",
     icon: "medal",
     color: "var(--ceem-cyan-deep)",
     ink: "var(--ceem-on-cyan)",
-    confirmed: true,
+  },
+  {
+    name: "Club de tareas",
+    description: "Acompañamiento para hacer la tarea en el Centro, con apoyo de las maestras.",
+    horario: "Lunes a viernes · 14:00 a 15:00 h y 15:00 a 16:00 h",
+    icon: "book",
+    color: "var(--ceem-orange-deep)",
+    ink: "var(--ceem-on-orange)",
+  },
+];
+
+export interface Programa {
+  readonly name: string;
+  readonly description: string;
+  readonly icon: string;
+  readonly color: string;
+  /** Tinta legible sobre ese color (ver palette-ceem.css). */
+  readonly ink: string;
+}
+
+/*
+ * [OFICIAL 17-ago-2026] Cursos especiales y regularización tal
+ * cual los dio el cliente. Los cursos "manejan los mismos
+ * horarios del programa académico y completo" — se referencia a
+ * HORARIOS en vez de repetir las horas, para que si cambian solo
+ * haya que tocar un lugar.
+ */
+export const CURSOS_ESPECIALES: readonly Programa[] = [
+  {
+    name: "Curso de Verano",
+    description: "Los mismos horarios del programa académico y completo.",
+    icon: "sun",
+    color: "var(--ceem-orange-deep)",
+    ink: "var(--ceem-on-orange)",
+  },
+  {
+    name: "Curso de Invierno",
+    description: "Los mismos horarios del programa académico y completo.",
+    icon: "snowflake",
+    color: "var(--ceem-cyan-deep)",
+    ink: "var(--ceem-on-cyan)",
+  },
+  {
+    name: "Curso de Primavera",
+    description: "Los mismos horarios del programa académico y completo.",
+    icon: "flower",
+    color: "var(--ceem-olive-deep)",
+    ink: "var(--ceem-on-olive)",
+  },
+];
+
+/*
+ * [OFICIAL 17-ago-2026] Regularización para preescolar y primaria.
+ * Nota: el sitio es del kínder, pero la regularización cubre
+ * primaria — se publica tal cual, es oferta real del Centro.
+ */
+export const REGULARIZACION: readonly Programa[] = [
+  {
+    name: "Regularización Preescolar",
+    description: "Refuerzo académico de 14:00 a 15:00 h y de 15:00 a 16:00 h.",
+    icon: "book",
+    color: "var(--ceem-carmin-deep)",
+    ink: "var(--ceem-on-carmin)",
+  },
+  {
+    name: "Regularización Primaria",
+    description: "Refuerzo académico de 14:00 a 15:00 h y de 15:00 a 16:00 h.",
+    icon: "graduation",
+    color: "var(--ceem-navy-deep)",
+    ink: "var(--ceem-on-navy)",
   },
 ];
 
@@ -445,7 +584,8 @@ export interface Documento {
   readonly name: string;
   /** Precisión entre paréntesis en la pieza original. */
   readonly detail?: string;
-  readonly copies: string;
+  /** Copias exigidas. Opcional: la lista de familias no las especifica. */
+  readonly copies?: string;
   readonly icon: string;
   readonly color: string;
 }
@@ -618,3 +758,186 @@ export const LOGO = {
   width: 794,
   height: 306,
 } as const;
+
+/*
+ * [OFICIAL 17-ago-2026] Apartado de educación inclusiva y
+ * neurodivergencia. El texto es literal del cliente; era un
+ * pendiente registrado — es un tema sensible para las familias y
+ * convenía su redacción exacta.
+ *
+ * Los perfiles que menciona (lenguaje, retrasos en el desarrollo,
+ * TDAH, autismo) van como respaldo de la promesa, no como
+ * catálogo.
+ */
+export const INCLUSION = {
+  titulo: "Educación inclusiva y neurodivergencia",
+  parrafos: [
+    "En Centro Educativo Educa Mates contamos con un equipo preparado para trabajar desde un enfoque de educación inclusiva y atención a la neurodivergencia. Hemos acompañado a niñas y niños con distintos perfiles y necesidades de aprendizaje, incluyendo dificultades en el lenguaje, retrasos en el desarrollo, TDAH, autismo y otras condiciones.",
+    "Cada alumno es único, por lo que buscamos conocer previamente sus necesidades, intereses y las estrategias que mejor favorecen su aprendizaje. Esto nos permite brindar un acompañamiento adecuado y crear un ambiente donde cada niño pueda aprender, desarrollarse y disfrutar plenamente de su experiencia escolar.",
+    "Nuestro compromiso es que todos los alumnos se sientan seguros, respetados, incluidos y acompañados durante su formación.",
+  ],
+} as const;
+
+export interface PasoInscripcion {
+  readonly numero: number;
+  readonly titulo: string;
+  readonly description: string;
+}
+
+/*
+ * [OFICIAL 17-ago-2026] Proceso de inscripción tal cual lo dictó
+ * el cliente: contacto, verificación de edad y documentación.
+ */
+export const PROCESO_INSCRIPCION: readonly PasoInscripcion[] = [
+  {
+    numero: 1,
+    titulo: "Ponte en contacto con nosotros",
+    description: "Escríbenos por WhatsApp o déjanos tus datos en el formulario y te respondemos el mismo día.",
+  },
+  {
+    numero: 2,
+    titulo: "Verifica la edad correspondiente",
+    description: "Juntos confirmamos que tu hijo quede en el nivel correcto según su edad.",
+  },
+  {
+    numero: 3,
+    titulo: "Presenta la documentación",
+    description: "Reúne los documentos de la lista y entrega copias en el Centro.",
+  },
+];
+
+/*
+ * [OFICIAL 17-ago-2026] La lista de documentos PARA LAS FAMILIAS.
+ * Esto resuelve el pendiente más engorroso: la pieza "Documentación"
+ * de agosto resultó ser de personal docente, y desde entonces
+ * faltaba la lista real para inscribir a un alumno.
+ */
+export const DOCUMENTOS_ALUMNO: readonly Documento[] = [
+  {
+    name: "Acta de nacimiento",
+    detail: "Del alumno y de los padres",
+    copies: "Copia",
+    icon: "footprints",
+    color: "var(--ceem-cyan-deep)",
+  },
+  {
+    name: "Comprobante de domicilio",
+    detail: "No mayor a tres meses",
+    copies: "Copia",
+    icon: "house",
+    color: "var(--ceem-orange-deep)",
+  },
+  {
+    name: "CURP",
+    detail: "Del alumno y de los padres o tutores",
+    copies: "Copia",
+    icon: "badge",
+    color: "var(--ceem-carmin-deep)",
+  },
+  {
+    name: "Cartilla de vacunación",
+    detail: "Actualizada, ambos lados",
+    copies: "Copia",
+    icon: "medical",
+    color: "var(--ceem-olive-deep)",
+  },
+  {
+    name: "INE",
+    detail: "De los padres y de tres personas autorizadas para recoger al alumno",
+    copies: "Copia",
+    icon: "id",
+    color: "var(--ceem-purple-deep)",
+  },
+  {
+    name: "Fotografías del alumno",
+    detail: "Tres fotografías tamaño infantil",
+    icon: "camera",
+    color: "var(--ceem-cyan-deep)",
+  },
+  {
+    name: "Fotografías de padres y autorizados",
+    detail: "Dos fotografías tamaño infantil de los padres y personas autorizadas",
+    icon: "camera",
+    color: "var(--ceem-orange-deep)",
+  },
+  {
+    name: "Boletas de ciclos anteriores",
+    detail: "En caso de aplicar",
+    copies: "Copia",
+    icon: "certificate",
+    color: "var(--ceem-navy-deep)",
+  },
+  {
+    name: "Certificado médico",
+    copies: "Original",
+    icon: "medical",
+    color: "var(--ceem-carmin-deep)",
+  },
+];
+
+/*
+ * [OFICIAL 17-ago-2026] Costos. Decisión del cliente: las
+ * colegiaturas y demás costos SOLO se dan por WhatsApp — y de
+ * hecho nunca se publicaron, así que no hay que retirar nada. La
+ * cuota de inscripción SÍ es pública: $3,008.00 MXN, y su único
+ * CTA es WhatsApp con atención personalizada.
+ */
+export const COSTOS = {
+  inscripcion: {
+    monto: "$3,008.00",
+    moneda: "MXN",
+    nota: "Cuota de inscripción",
+  },
+  colegiaturas: {
+    mensaje: "Las colegiaturas y demás costos se comparten por WhatsApp, con atención personalizada.",
+  },
+} as const;
+
+export interface Promocion {
+  readonly mensaje: string;
+  /** Texto prellenado del WhatsApp de esta promoción. */
+  readonly whatsappMensaje: string;
+  /** Ilustración que acompaña la promoción. */
+  readonly ilustracion: string;
+  readonly ilustracionAlt: string;
+}
+
+/*
+ * [OFICIAL 17-ago-2026] Mensajes promocionales que el cliente
+ * quiere repartidos por el sitio con los personajes de CEEM, para
+ * darle dinamismo e incrementar conversiones. Los cinco mensajes
+ * son literales; los personajes se reparten los que ya existen.
+ * El texto prellenado de WhatsApp lo abre ya en contexto.
+ */
+export const PROMOCIONES: readonly Promocion[] = [
+  {
+    mensaje: "Pregunta por nuestras becas",
+    whatsappMensaje: "Hola, quiero preguntar por las becas.",
+    ilustracion: "/ilustraciones/completos/nina-coletas.png",
+    ilustracionAlt: "Niña de EducaMates con coletas invitándote a preguntar por las becas",
+  },
+  {
+    mensaje: "Promoción de inscripción",
+    whatsappMensaje: "Hola, quiero información de la promoción de inscripción.",
+    ilustracion: "/ilustraciones/completos/nino-afro.png",
+    ilustracionAlt: "Niño de EducaMates sonriendo con la promoción de inscripción",
+  },
+  {
+    mensaje: "Agenda tu visita",
+    whatsappMensaje: "Hola, quiero agendar una visita al Centro Educativo.",
+    ilustracion: "/ilustraciones/completos/nina-mayor.png",
+    ilustracionAlt: "Niña de EducaMates agendando tu visita al Centro",
+  },
+  {
+    mensaje: "Solicita información",
+    whatsappMensaje: "Hola, quisiera recibir información del Centro Educativo.",
+    ilustracion: "/ilustraciones/completos/nino-pelirrojo.png",
+    ilustracionAlt: "Niño de EducaMates ofreciendo información",
+  },
+  {
+    mensaje: "Conoce nuestros programas",
+    whatsappMensaje: "Hola, quiero conocer los programas del Centro Educativo.",
+    ilustracion: "/ilustraciones/completos/nina-rubia.png",
+    ilustracionAlt: "Niña de EducaMates presentando los programas",
+  },
+];
