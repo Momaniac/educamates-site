@@ -232,6 +232,7 @@ export const NAV: readonly NavItem[] = [
   { label: "Niveles", href: "#niveles" },
   { label: "Talleres", href: "#talleres" },
   { label: "Servicios", href: "#servicios" },
+  { label: "Equipo", href: "#equipo" },
   { label: "Admisión", href: "#admision" },
   { label: "Contacto", href: "#contacto" },
 ];
@@ -732,14 +733,28 @@ export const PAGOS = {
  * aquí van redimensionados. Next sirve WebP automáticamente.
  */
 export const ILUSTRACIONES = {
-  /* Los dos que flanquean la portada, como en la gráfica del cliente. */
+  /*
+   * [OFICIAL 17-ago-2026] Los niños originales de CEEM que el
+   * cliente pidió conservar como imagen principal. Llegaron con
+   * fondo blanco sólido; el fondo se volvió transparente con
+   * relleno por inundación desde los bordes.
+   */
   heroIzquierda: {
-    src: "/ilustraciones/completos/nino-pelirrojo.png",
-    alt: "Niño de EducaMates saludando con los brazos abiertos",
+    src: "/ilustraciones/completos/nino-ceem.png",
+    alt: "Niño de EducaMates con los brazos abiertos",
   },
   heroDerecha: {
-    src: "/ilustraciones/completos/nina-rubia.png",
-    alt: "Niña de EducaMates saludando con los brazos abiertos",
+    src: "/ilustraciones/completos/nina-ceem.png",
+    alt: "Niña de EducaMates con los brazos abiertos",
+  },
+  /* Personajes extra del mismo envío, para asomarse en secciones. */
+  hada: {
+    src: "/ilustraciones/completos/hada.png",
+    alt: "Hada de EducaMates",
+  },
+  superheroina: {
+    src: "/ilustraciones/completos/superheroina.png",
+    alt: "Superheroína de EducaMates",
   },
   /* Caritas para la franja de comunidad. La octava era duplicado. */
   caritas: [1, 2, 3, 4, 5, 6, 7].map((n) => `/ilustraciones/caritas/carita-${n}.png`),
@@ -901,6 +916,115 @@ export interface Promocion {
   readonly ilustracion: string;
   readonly ilustracionAlt: string;
 }
+
+export interface Integrante {
+  readonly nombre: string;
+  readonly rol: string;
+  readonly foto: string;
+  /** Semblanza individual; el cliente las manda durante la semana. */
+  readonly semblanza?: string;
+}
+
+export interface GrupoEquipo {
+  readonly titulo: string;
+  readonly descripcion: string;
+  readonly integrantes: readonly Integrante[];
+}
+
+/*
+ * [OFICIAL 17-ago-2026] El organigrama del cliente (Equipo.pdf),
+ * recreado como sección de equipo al diseño del sitio — no como
+ * imagen ni PDF incrustado: el texto de una imagen no lo indexa un
+ * buscador ni se lee en móvil. La jerarquía del PDF se conserva
+ * como grupos: Dirección → Coordinación → docentes por nivel →
+ * equipo de apoyo. El rol de Juan Carlos (Control Escolar) lo
+ * confirmó Ramsés; el resto se leyó del propio organigrama.
+ *
+ * ⚠ [PENDIENTE] Las semblanzas individuales las manda el cliente
+ * "durante la semana"; al llegar se llenan aquí y las cards las
+ * muestran solas.
+ */
+export const EQUIPO: readonly GrupoEquipo[] = [
+  {
+    titulo: "Dirección",
+    descripcion: "La visión que guía al Centro Educativo.",
+    integrantes: [
+      {
+        nombre: "Dra. Alma Martínez",
+        rol: "Dirección General",
+        foto: "/equipo/alma-martinez.webp",
+      },
+    ],
+  },
+  {
+    titulo: "Coordinación Académica",
+    descripcion: "El puente entre la dirección y cada salón.",
+    integrantes: [
+      {
+        nombre: "Lic. Pamela Tejeda",
+        rol: "Coordinación Académica",
+        foto: "/equipo/pamela-tejeda.webp",
+      },
+    ],
+  },
+  {
+    titulo: "Equipo docente",
+    descripcion: "Una maestra por cada etapa de la escalera de niveles.",
+    integrantes: [
+      {
+        nombre: "Lic. Magnolia",
+        rol: "Maternales",
+        foto: "/equipo/magnolia.webp",
+      },
+      {
+        nombre: "Lic. Silvia",
+        rol: "Preescolar 1",
+        foto: "/equipo/silvia.webp",
+      },
+      {
+        nombre: "Lic. Margarita Rosas",
+        rol: "Preescolar 2",
+        foto: "/equipo/margarita-rosas.webp",
+      },
+      {
+        nombre: "Lic. Gabina Acosta",
+        rol: "Enlace Académico y Preescolar 3",
+        foto: "/equipo/gabina-acosta.webp",
+      },
+    ],
+  },
+  {
+    titulo: "Equipo de apoyo",
+    descripcion: "Quienes hacen que todo funcione todos los días.",
+    integrantes: [
+      {
+        nombre: "Lic. Juan Carlos De la Rosa",
+        rol: "Control Escolar",
+        foto: "/equipo/juan-carlos-de-la-rosa.webp",
+      },
+      {
+        nombre: "Lic. Sofía",
+        rol: "Maestra suplente",
+        foto: "/equipo/sofia.webp",
+      },
+      {
+        nombre: "Lic. Magali",
+        rol: "Maestra suplente",
+        foto: "/equipo/magali.webp",
+      },
+      {
+        nombre: "Lic. Tadeo Alfaro",
+        rol: "Tae Kwon Do",
+        foto: "/equipo/tadeo-alfaro.webp",
+      },
+      {
+        nombre: "Lizeth Miranda",
+        rol: "Auxiliar de cocina e intendencia",
+        foto: "/equipo/lizeth-miranda.webp",
+      },
+    ],
+  },
+];
 
 /*
  * [OFICIAL 17-ago-2026] Mensajes promocionales que el cliente

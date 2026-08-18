@@ -29,6 +29,7 @@ import {
   DOCUMENTOS_ALUMNO,
   DOCUMENTOS_COLABORADOR,
   ENFOQUE,
+  EQUIPO,
   HORARIOS,
   ILUSTRACIONES,
   INCLUSION,
@@ -568,6 +569,101 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ Equipo ═════════════════════════════════════════ */}
+        {/*
+         * El organigrama del cliente (Equipo.pdf), recreado al
+         * diseño del sitio: la jerarquía se conserva como grupos.
+         * Cuando lleguen las semblanzas, la card las muestra sola
+         * (el campo semblanza de cada integrante).
+         *
+         * La hada y la superheroína del mismo envío se asoman a
+         * esta sección, como pidió el cliente: personajes
+         * acompañando bloques para darle dinamismo.
+         */}
+        <section id="equipo" className="relative scroll-mt-24 overflow-hidden bg-white px-4 py-16 sm:px-6 sm:py-24">
+          {/* Personajes asomándose tras el contenido. */}
+          <Image
+            src={ILUSTRACIONES.hada.src}
+            alt=""
+            aria-hidden
+            width={300}
+            height={450}
+            className="soft-bounce pointer-events-none absolute -left-6 top-24 hidden h-44 w-auto lg:block xl:h-52"
+          />
+          <Image
+            src={ILUSTRACIONES.superheroina.src}
+            alt=""
+            aria-hidden
+            width={300}
+            height={450}
+            className="soft-bounce pointer-events-none absolute -right-4 bottom-16 hidden h-44 w-auto lg:block xl:h-52"
+            style={{ animationDelay: "-2.1s" }}
+          />
+
+          <div className="relative mx-auto max-w-6xl">
+            <header className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
+                Nuestro equipo
+              </p>
+              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
+                Las personas que acompañan a tu hijo
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-brand-text/70">
+                Un equipo por cada etapa: dirección, coordinación académica, maestras por nivel y
+                el apoyo que hace que todo funcione.
+              </p>
+            </header>
+
+            <div className="mt-14 space-y-14">
+              {EQUIPO.map((grupo) => (
+                <div key={grupo.titulo}>
+                  <header className="mx-auto max-w-2xl text-center">
+                    <h3 className="text-xl font-black text-brand-primary">{grupo.titulo}</h3>
+                    <p className="mt-1 text-sm text-brand-text/60">{grupo.descripcion}</p>
+                  </header>
+                  <ul
+                    className={`mt-7 grid gap-5 sm:grid-cols-2 ${
+                      grupo.integrantes.length > 3 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+                    }`}
+                  >
+                    {grupo.integrantes.map((persona) => (
+                      <li
+                        key={persona.nombre}
+                        className={`overflow-hidden rounded-[var(--ceem-radius-card)] bg-white shadow-[var(--ceem-sticker-shadow)] ring-2 ring-brand-muted ${
+                          grupo.integrantes.length === 1 ? "mx-auto sm:max-w-xs lg:max-w-xs" : ""
+                        }`}
+                      >
+                        <div className="aspect-[6/7] w-full overflow-hidden bg-brand-muted/40">
+                          <Image
+                            src={persona.foto}
+                            alt={`${persona.nombre}, ${persona.rol} del Centro Educativo EducaMates`}
+                            width={480}
+                            height={560}
+                            className="h-full w-full object-cover object-top"
+                          />
+                        </div>
+                        <div className="p-5">
+                          <h4 className="text-lg font-black leading-tight text-brand-primary">
+                            {persona.nombre}
+                          </h4>
+                          <p className="mt-1 text-sm font-bold text-brand-secondary">
+                            {persona.rol}
+                          </p>
+                          {persona.semblanza && (
+                            <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
+                              {persona.semblanza}
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </section>

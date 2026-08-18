@@ -2,6 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { AREAS } from "@/lib/areas";
 import { PortalHeader } from "@/components/portal-header";
 import { BrandOrbs } from "@/components/brand-orbs";
+import { BrandLockup } from "@/components/brand-lockup";
 import { AreasDetail } from "@/components/areas-detail";
 
 /*
@@ -65,6 +66,13 @@ export default function PortalPage() {
             <p className="mt-5 text-[clamp(0.75rem,2.6vw,1.15rem)] font-medium uppercase tracking-[0.32em] text-[var(--color-accent)]">
               Cartera de servicios
             </p>
+
+            {/*
+             * Lockup de logotipos pedido por el cliente (17-ago):
+             * el principal arriba, las tres marcas menores con su
+             * nombre al hover, debajo del subtítulo.
+             */}
+            <BrandLockup />
           </header>
 
           {/* ── Los tres orbes ───────────────────────────────── */}
