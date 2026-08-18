@@ -14,6 +14,11 @@ export interface Area {
    * composición, la paleta define el color.
    */
   readonly accent: string;
+  /** Logotipo de la marca, entregado por el cliente (17-ago). */
+  readonly logo: string;
+  /** Dimensiones intrínsecas del logo, para next/image. */
+  readonly logoWidth: number;
+  readonly logoHeight: number;
   readonly href: string;
   readonly available: boolean;
   /** Lo que el usuario encontrará en el sitio de esa área. */
@@ -39,6 +44,9 @@ export const AREAS: readonly Area[] = [
      * usado del sitio EMF. Además coincide con el azul del mockup.
      */
     accent: "var(--color-intermediate)",
+    logo: "/marcas/logo-ceem.png",
+    logoWidth: 794,
+    logoHeight: 306,
     href: DOMAINS.ceem,
     available: DOMAINS.ceem !== "",
     contents: [
@@ -63,6 +71,9 @@ export const AREAS: readonly Area[] = [
      * el cálido contra el fondo azul la señala sola.
      */
     accent: "var(--color-secondary)",
+    logo: "/marcas/logo-emf-cuadro.png",
+    logoWidth: 480,
+    logoHeight: 480,
     href: DOMAINS.emf,
     available: DOMAINS.emf !== "",
     contents: [
@@ -81,6 +92,9 @@ export const AREAS: readonly Area[] = [
     tagline: "Consultoría, Detona y desarrollo humano. Acompañamiento y sesiones uno a uno.",
     /* Único color fuera de la paleta; ver el aviso en globals.css. */
     accent: "var(--area-almalibre)",
+    logo: "/marcas/logo-almalibre.png",
+    logoWidth: 3008,
+    logoHeight: 1408,
     href: DOMAINS.almalibre,
     available: DOMAINS.almalibre !== "",
     contents: [

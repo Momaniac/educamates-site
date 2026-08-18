@@ -240,6 +240,35 @@
 }
 
 /*
+ * Variante con logo (17-ago): disco blanco con borde del color de
+ * la marca, en lugar del vidrio tintado. El logo multicolor no se
+ * edita — es el fondo el que cambia para alojarlo. El aro es
+ * grueso a propósito: a este tamaño es la mitad de la identidad.
+ */
+.orb-disc.orb-brand {
+  background:
+    radial-gradient(
+      120% 110% at 30% 16%,
+      #ffffff 0%,
+      #ffffff 55%,
+      color-mix(in srgb, var(--accent) 6%, #ffffff) 100%
+    );
+  border: 3px solid color-mix(in srgb, var(--accent) 78%, #ffffff);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -18px 36px color-mix(in srgb, var(--accent) 10%, transparent),
+    0 26px 70px -14px color-mix(in srgb, var(--accent) 62%, transparent);
+}
+
+.orb-link:hover .orb-brand.orb-face,
+.orb-link:focus-visible .orb-brand.orb-face {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -18px 36px color-mix(in srgb, var(--accent) 14%, transparent),
+    0 34px 90px -12px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+/*
  * Área aún sin sitio: baja de intensidad pero conserva su color.
  * El cliente quiere ver las tres marcas identificadas desde el
  * primer vistazo, aunque dos todavía no tengan destino.

@@ -928,6 +928,8 @@ export interface Integrante {
 export interface GrupoEquipo {
   readonly titulo: string;
   readonly descripcion: string;
+  /** Color del aro de las fotos del grupo (rueda CEEM, familia -deep). */
+  readonly color: string;
   readonly integrantes: readonly Integrante[];
 }
 
@@ -935,10 +937,11 @@ export interface GrupoEquipo {
  * [OFICIAL 17-ago-2026] El organigrama del cliente (Equipo.pdf),
  * recreado como sección de equipo al diseño del sitio — no como
  * imagen ni PDF incrustado: el texto de una imagen no lo indexa un
- * buscador ni se lee en móvil. La jerarquía del PDF se conserva
- * como grupos: Dirección → Coordinación → docentes por nivel →
- * equipo de apoyo. El rol de Juan Carlos (Control Escolar) lo
- * confirmó Ramsés; el resto se leyó del propio organigrama.
+ * buscador ni se lee en móvil. La jerarquía del PDF se conserva en
+ * el orden de los grupos (Dirección → Coordinación → docentes por
+ * nivel → equipo de apoyo) y en el color del aro de cada foto.
+ * El rol de Juan Carlos (Control Escolar) lo confirmó Ramsés; el
+ * resto se leyó del propio organigrama.
  *
  * ⚠ [PENDIENTE] Las semblanzas individuales las manda el cliente
  * "durante la semana"; al llegar se llenan aquí y las cards las
@@ -948,6 +951,7 @@ export const EQUIPO: readonly GrupoEquipo[] = [
   {
     titulo: "Dirección",
     descripcion: "La visión que guía al Centro Educativo.",
+    color: "var(--ceem-navy-deep)",
     integrantes: [
       {
         nombre: "Dra. Alma Martínez",
@@ -959,6 +963,7 @@ export const EQUIPO: readonly GrupoEquipo[] = [
   {
     titulo: "Coordinación Académica",
     descripcion: "El puente entre la dirección y cada salón.",
+    color: "var(--ceem-carmin-deep)",
     integrantes: [
       {
         nombre: "Lic. Pamela Tejeda",
@@ -970,6 +975,7 @@ export const EQUIPO: readonly GrupoEquipo[] = [
   {
     titulo: "Equipo docente",
     descripcion: "Una maestra por cada etapa de la escalera de niveles.",
+    color: "var(--ceem-cyan-deep)",
     integrantes: [
       {
         nombre: "Lic. Magnolia",
@@ -996,6 +1002,7 @@ export const EQUIPO: readonly GrupoEquipo[] = [
   {
     titulo: "Equipo de apoyo",
     descripcion: "Quienes hacen que todo funcione todos los días.",
+    color: "var(--ceem-olive-deep)",
     integrantes: [
       {
         nombre: "Lic. Juan Carlos De la Rosa",

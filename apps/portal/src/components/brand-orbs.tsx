@@ -1,8 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { ArrowRight } from "lucide-react";
-import { AREA_ICONS } from "./area-icons";
+import Image from "next/image";
 import type { Area } from "@/lib/areas";
 
 interface BrandOrbsProps {
@@ -10,19 +9,20 @@ interface BrandOrbsProps {
 }
 
 /*
- * Selector principal: tres discos de cristal flotando sobre el
- * piso reflectante, tal como los pidió el cliente.
+ * Selector principal: tres discos flotando sobre el piso
+ * reflectante. Desde que el cliente entregó los logotipos
+ * (17-ago), cada disco es un círculo blanco con el borde del color
+ * de su marca y el logotipo dentro — antes llevaban icono y texto
+ * provisionales.
  *
- * Responsive: las tres siempre se ven a la vez (esa es la idea
- * del portal), pero en móvil el disco lleva el nombre corto y el
- * nombre completo baja como pie de foto, que a 100 px de ancho el
- * nombre largo sería ilegible.
+ * El nombre de la marca baja como pie de foto bajo el disco: el
+ * logo multicolor de CEEM, por ejemplo, necesita el texto cerca
+ * para quien no lo conozca todavía.
  */
 export function BrandOrbs({ areas }: BrandOrbsProps) {
   return (
     <ul className="relative z-10 mx-auto flex w-full max-w-4xl items-start justify-center gap-3 px-4 sm:gap-6 sm:px-6 md:gap-10">
       {areas.map((area, index) => {
-        const Icon = AREA_ICONS[area.id];
         /* El disco central va un punto más grande, como en el mockup. */
         const featured = index === 1;
 
@@ -33,29 +33,25 @@ export function BrandOrbs({ areas }: BrandOrbsProps) {
 
         const face = (
           <div
-            className={`orb-disc orb-face relative flex aspect-square w-full flex-col items-center justify-center rounded-full px-2 text-center sm:px-4 ${
+            className={`orb-disc orb-brand orb-face relative flex aspect-square w-full flex-col items-center justify-center rounded-full p-[13%] text-center sm:p-[15%] ${
               featured ? "sm:scale-105" : ""
             }`}
           >
-            {Icon && (
-              <Icon className="mb-1.5 h-[26%] w-[26%] text-white sm:mb-2.5" />
-            )}
+            {/*
+             * Logo dentro del círculo blanco. contain para que el
+             * arte completo respire sin importar su proporción
+             * (el de CEEM es apaisado, el de EMF cuadrado).
+             */}
+            <Image
+              src={area.logo}
+              alt=""
+              width={area.logoWidth}
+              height={area.logoHeight}
+              className="h-full w-full object-contain"
+            />
 
-            {/* La sombra mantiene legible el texto blanco tanto sobre
-                el coral como sobre los azules del sistema. */}
-            <span className="text-[clamp(0.56rem,2.1vw,1.05rem)] font-bold uppercase leading-[1.15] tracking-wide text-white [text-shadow:0_1px_10px_rgba(3,4,32,0.6)]">
-              {/* Nombre corto en móvil, completo a partir de sm. */}
-              <span className="sm:hidden">{area.short}</span>
-              <span className="hidden sm:inline">{area.name}</span>
-            </span>
-
-            {area.available ? (
-              <ArrowRight
-                aria-hidden
-                className="mt-1.5 h-[13%] w-[13%] text-white transition-transform duration-300 group-hover:translate-x-1 sm:mt-3"
-              />
-            ) : (
-              <span className="mt-1.5 text-[clamp(0.42rem,1.5vw,0.7rem)] font-semibold uppercase tracking-[0.16em] text-white/85 [text-shadow:0_1px_8px_rgba(3,4,32,0.6)] sm:mt-3">
+            {area.available ? null : (
+              <span className="absolute inset-x-0 bottom-[9%] text-[clamp(0.5rem,1.6vw,0.72rem)] font-bold uppercase tracking-[0.14em] text-[color-mix(in_srgb,var(--accent)_75%,#1c1c4a)]">
                 Próximamente
               </span>
             )}
@@ -65,7 +61,7 @@ export function BrandOrbs({ areas }: BrandOrbsProps) {
         /* Reflejo en el piso: copia volteada, difuminada y recortada. */
         const mirror = (
           <div className="orb-mirror mt-1 aspect-[5/2] w-full overflow-hidden" aria-hidden>
-            <div className="orb-disc aspect-square w-full rounded-full" />
+            <div className="orb-disc orb-brand aspect-square w-full rounded-full" />
           </div>
         );
 
@@ -86,7 +82,7 @@ export function BrandOrbs({ areas }: BrandOrbsProps) {
              * sin él, en portátiles de pantalla baja los discos
              * crecían hasta empujar la flecha de scroll fuera.
              */
-            className={`flex min-w-0 max-w-[min(13.5rem,24vh)] flex-1 flex-col items-center ${
+            className={`flex min-w-0 max-w-[min(14.5rem,25vh)] flex-1 flex-col items-center ${
               area.available ? "" : "orb-soon"
             }`}
             style={style}
@@ -108,9 +104,9 @@ export function BrandOrbs({ areas }: BrandOrbsProps) {
               </div>
             )}
 
-            {/* Nombre completo bajo el disco: solo hace falta en móvil. */}
-            <span className="mt-2 text-center text-[10px] font-semibold leading-tight text-white/55 sm:hidden">
-              {area.name}
+            {/* Nombre de la marca bajo el disco, siempre visible. */}
+            <span className="mt-2 text-center text-[10px] font-semibold leading-tight text-white/70 sm:text-[11px]">
+              {area.short === area.name ? area.name : `${area.short} · ${area.name}`}
             </span>
           </li>
         );

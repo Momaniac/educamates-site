@@ -576,13 +576,14 @@ export default function HomePage() {
         {/* ═══ Equipo ═════════════════════════════════════════ */}
         {/*
          * El organigrama del cliente (Equipo.pdf), recreado al
-         * diseño del sitio: la jerarquía se conserva como grupos.
-         * Cuando lleguen las semblanzas, la card las muestra sola
-         * (el campo semblanza de cada integrante).
+         * diseño del sitio. Grid compacto estilo EMF (foto circular
+         * + nombre + rol, ~4 columnas) para que todo el equipo se
+         * vea en una pantalla: la jerarquía del PDF se conserva
+         * como etiqueta de grupo en cada card, no como bloques
+         * separados que alargan el scroll.
          *
-         * La hada y la superheroína del mismo envío se asoman a
-         * esta sección, como pidió el cliente: personajes
-         * acompañando bloques para darle dinamismo.
+         * La hada y la superheroína del mismo envío se asoman,
+         * como pidió el cliente: personajes acompañando bloques.
          */}
         <section id="equipo" className="relative scroll-mt-24 overflow-hidden bg-white px-4 py-16 sm:px-6 sm:py-24">
           {/* Personajes asomándose tras el contenido. */}
@@ -618,53 +619,44 @@ export default function HomePage() {
               </p>
             </header>
 
-            <div className="mt-14 space-y-14">
-              {EQUIPO.map((grupo) => (
-                <div key={grupo.titulo}>
-                  <header className="mx-auto max-w-2xl text-center">
-                    <h3 className="text-xl font-black text-brand-primary">{grupo.titulo}</h3>
-                    <p className="mt-1 text-sm text-brand-text/60">{grupo.descripcion}</p>
-                  </header>
-                  <ul
-                    className={`mt-7 grid gap-5 sm:grid-cols-2 ${
-                      grupo.integrantes.length > 3 ? "lg:grid-cols-4" : "lg:grid-cols-3"
-                    }`}
-                  >
-                    {grupo.integrantes.map((persona) => (
-                      <li
-                        key={persona.nombre}
-                        className={`overflow-hidden rounded-[var(--ceem-radius-card)] bg-white shadow-[var(--ceem-sticker-shadow)] ring-2 ring-brand-muted ${
-                          grupo.integrantes.length === 1 ? "mx-auto sm:max-w-xs lg:max-w-xs" : ""
-                        }`}
-                      >
-                        <div className="aspect-[6/7] w-full overflow-hidden bg-brand-muted/40">
-                          <Image
-                            src={persona.foto}
-                            alt={`${persona.nombre}, ${persona.rol} del Centro Educativo EducaMates`}
-                            width={480}
-                            height={560}
-                            className="h-full w-full object-cover object-top"
-                          />
-                        </div>
-                        <div className="p-5">
-                          <h4 className="text-lg font-black leading-tight text-brand-primary">
-                            {persona.nombre}
-                          </h4>
-                          <p className="mt-1 text-sm font-bold text-brand-secondary">
-                            {persona.rol}
-                          </p>
-                          {persona.semblanza && (
-                            <p className="mt-2 text-sm leading-relaxed text-brand-text/65">
-                              {persona.semblanza}
-                            </p>
-                          )}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+            <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
+              {EQUIPO.flatMap((grupo) =>
+                grupo.integrantes.map((persona) => (
+                  <li key={persona.nombre} className="group flex flex-col items-center text-center">
+                    {/*
+                     * Marco circular al estilo EMF: aro con el color
+                     * del grupo (derivado de la rueda CEEM) y foto
+                     * circular dentro.
+                     */}
+                    <div
+                      className="flex h-32 w-32 items-center justify-center rounded-full p-1.5 shadow-lg transition-transform duration-300 group-hover:scale-[1.04] sm:h-36 sm:w-36"
+                      style={{ backgroundColor: grupo.color }}
+                    >
+                      <div className="h-full w-full overflow-hidden rounded-full bg-white">
+                        <Image
+                          src={persona.foto}
+                          alt={`${persona.nombre}, ${persona.rol} del Centro Educativo EducaMates`}
+                          width={480}
+                          height={560}
+                          className="h-full w-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                    <h3 className="mt-4 text-base font-black leading-tight text-brand-primary sm:text-lg">
+                      {persona.nombre}
+                    </h3>
+                    <p className="mt-1 text-xs font-black uppercase tracking-wide text-brand-secondary sm:text-sm sm:normal-case sm:tracking-normal">
+                      {persona.rol}
+                    </p>
+                    {persona.semblanza && (
+                      <p className="mt-2 max-w-[16rem] text-sm leading-relaxed text-brand-text/65">
+                        {persona.semblanza}
+                      </p>
+                    )}
+                  </li>
+                )),
+              )}
+            </ul>
           </div>
         </section>
 

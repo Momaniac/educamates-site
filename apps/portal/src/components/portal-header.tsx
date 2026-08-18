@@ -6,17 +6,16 @@ import { AREA_ICONS } from "./area-icons";
 import type { Area } from "@/lib/areas";
 
 interface PortalHeaderProps {
-  readonly logoSrc: string;
   readonly areas: readonly Area[];
 }
 
 /*
- * Encabezado del mockup: logo a la izquierda, botón de menú a la
- * derecha. El menú abre en pantalla completa y repite las tres
- * áreas, para que el usuario pueda saltar entre marcas sin volver
- * al hero.
+ * Encabezado del mockup con solo el botón de menú. El logo ya no
+ * vive aquí (petición del cliente, 17-ago): es la pieza principal
+ * del hero. El menú abre en pantalla completa y repite las tres
+ * áreas, para saltar entre marcas sin volver al hero.
  */
-export function PortalHeader({ logoSrc, areas }: PortalHeaderProps) {
+export function PortalHeader({ areas }: PortalHeaderProps) {
   const [open, setOpen] = useState(false);
 
   /* Con el menú abierto no debe correr el fondo, y Esc lo cierra. */
@@ -39,16 +38,7 @@ export function PortalHeader({ logoSrc, areas }: PortalHeaderProps) {
 
   return (
     <>
-      <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 sm:px-8 sm:py-7">
-        <a href="#top" className="shrink-0" aria-label="EducaMates Foundation — inicio">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logoSrc}
-            alt="EducaMates Foundation"
-            className="h-10 w-auto object-contain sm:h-12"
-          />
-        </a>
-
+      <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-end px-5 py-5 sm:px-8 sm:py-7">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -67,13 +57,7 @@ export function PortalHeader({ logoSrc, areas }: PortalHeaderProps) {
           aria-modal="true"
           aria-label="Menú de navegación"
         >
-          <div className="flex items-center justify-between px-5 py-5 sm:px-8 sm:py-7">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={logoSrc}
-              alt="EducaMates Foundation"
-              className="h-10 w-auto object-contain sm:h-12"
-            />
+          <div className="flex items-center justify-end px-5 py-5 sm:px-8 sm:py-7">
             <button
               type="button"
               onClick={() => setOpen(false)}

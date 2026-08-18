@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { AREAS } from "@/lib/areas";
 import { PortalHeader } from "@/components/portal-header";
 import { BrandOrbs } from "@/components/brand-orbs";
-import { BrandLockup } from "@/components/brand-lockup";
 import { AreasDetail } from "@/components/areas-detail";
 
 /*
@@ -35,21 +35,37 @@ export default function PortalPage() {
           />
         </div>
 
-        <PortalHeader logoSrc={LOGO_SRC} areas={AREAS} />
+        {/*
+         * Cabecera solo con el menú: el logo ya no vive en la
+         * esquina superior izquierda — es ahora la pieza principal
+         * del hero (petición del cliente, 17-ago).
+         */}
+        <PortalHeader areas={AREAS} />
 
-        {/* ── Título monumental ──────────────────────────────── */}
-        <div className="relative z-10 flex flex-1 flex-col justify-center pb-4 pt-20 sm:pt-24">
+        {/* ── Logo principal ─────────────────────────────────── */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center pb-4 pt-16 sm:pt-20">
           <header className="px-5 text-center sm:px-8">
             {/*
-             * El tamaño mira el ancho y el alto a la vez: en un
-             * portátil de 720 px de alto un título dimensionado
-             * solo por ancho empujaba los orbes fuera de la vista.
+             * El logo sustituye al título monumental, en el mismo
+             * sitio y tamaño equivalente. El clamp mira ancho y
+             * alto a la vez, como hacía el titular: en un portátil
+             * de pantalla baja no debe empujar los orbes fuera.
              */}
-            <h1 className="text-balance text-[clamp(2.25rem,min(10.5vw,12vh),6.5rem)] font-black uppercase leading-[0.92] tracking-[-0.02em] text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.45)]">
-              EducaMates
-              <br />
-              Foundation
-            </h1>
+            {/*
+             * El h1 va visualmente oculto dentro del logo: la
+             * página necesita un título principal para lectores
+             * y buscadores, pero el cliente quiere que aquí se
+             * vea el logotipo, no texto.
+             */}
+            <h1 className="sr-only">EducaMates Foundation</h1>
+            <Image
+              src={LOGO_SRC}
+              alt="EducaMates Foundation"
+              width={520}
+              height={520}
+              priority
+              className="mx-auto h-auto w-[clamp(11rem,min(38vw,34vh),22rem)] drop-shadow-[0_6px_40px_rgba(0,0,0,0.5)]"
+            />
 
             {/* La línea y el subtítulo llevan el coral y el durazno
                 de la marca: son los dos únicos cálidos del hero y
@@ -66,13 +82,6 @@ export default function PortalPage() {
             <p className="mt-5 text-[clamp(0.75rem,2.6vw,1.15rem)] font-medium uppercase tracking-[0.32em] text-[var(--color-accent)]">
               Cartera de servicios
             </p>
-
-            {/*
-             * Lockup de logotipos pedido por el cliente (17-ago):
-             * el principal arriba, las tres marcas menores con su
-             * nombre al hover, debajo del subtítulo.
-             */}
-            <BrandLockup />
           </header>
 
           {/* ── Los tres orbes ───────────────────────────────── */}
