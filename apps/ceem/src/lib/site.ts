@@ -34,6 +34,16 @@
  * que comparte el propio cliente en su propaganda; el número
  * sigue existiendo para construir los mensajes con ?text=
  * prellenado (los enlaces cortos no aceptan texto prellenado).
+ *
+ * [VERIFICADO 27-ago-2026] Se volvió a comprobar contra WhatsApp,
+ * resolviendo cada enlace y leyendo el nombre de la cuenta:
+ *   wa.me/message/GBGRRD5C3VBQH1 → "Centro Educativo Educa Mates" ✓
+ *   wa.me/5215635555598          → "Centro Educativo Educa Mates" ✓
+ *   wa.me/5215635555558          → sin cuenta (página genérica) ✗
+ *   wa.me/5215561852213          → "Educa Mates Foundation" ✓ (EMF)
+ * O sea: el enlace corto y el número son la MISMA cuenta de CEEM,
+ * y el …5558 de la pieza de datos bancarios no tiene WhatsApp. No
+ * cambiar nada aquí sin repetir esta comprobación.
  */
 export const CONTACT = {
   name: "Centro Educativo EducaMates",
@@ -934,14 +944,36 @@ export interface GrupoEquipo {
 }
 
 /*
- * [OFICIAL 17-ago-2026] El organigrama del cliente (Equipo.pdf),
- * recreado como sección de equipo al diseño del sitio — no como
- * imagen ni PDF incrustado: el texto de una imagen no lo indexa un
- * buscador ni se lee en móvil. La jerarquía del PDF se conserva en
- * el orden de los grupos (Dirección → Coordinación → docentes por
- * nivel → equipo de apoyo) y en el color del aro de cada foto.
- * El rol de Juan Carlos (Control Escolar) lo confirmó Ramsés; el
- * resto se leyó del propio organigrama.
+ * [OFICIAL 17-ago-2026 · CORREGIDO 27-ago-2026] El organigrama del
+ * cliente (Equipo.pdf), recreado como sección de equipo al diseño
+ * del sitio — no como imagen ni PDF incrustado: el texto de una
+ * imagen no lo indexa un buscador ni se lee en móvil.
+ *
+ * ⚠ La primera versión se armó leyendo los NOMBRES DE ARCHIVO de las
+ * fotos que venían sueltas en el correo, porque el PDF no tiene capa
+ * de texto legible (se extrae revuelta: "Preesco Preescolar 1 lar 2").
+ * Eso metió tres errores que el cliente reportó el 27-ago: el rol de
+ * Pamela Tejeda (el archivo no traía rol y se dedujo "Coordinación
+ * Académica" cuando el organigrama dice "Subdirección
+ * administrativa"), varios apellidos faltantes, y la omisión de
+ * Samuel E. Martínez, que sólo aparece dentro del PDF y no tenía
+ * foto suelta. Ahora TODO sale del organigrama leído gráficamente.
+ *
+ * Reglas de esta lista, para que no se vuelva a torcer:
+ *  · El ROL es literal del organigrama. Si cambia, cambia el PDF.
+ *  · El NOMBRE es el del organigrama, completo. Se conservan los
+ *    tratamientos que el propio cliente usa en sus archivos ("Dra."
+ *    de Alma, "Lic." de Pamela — el PDF la pone como "K. Pamela
+ *    Tejeda") y se normalizan acentos (Hernández).
+ *  · El orden de los grupos conserva la jerarquía del organigrama:
+ *    Dirección → Subdirección y control escolar → docentes por nivel
+ *    → suplentes → talleres y apoyo. Dentro de las docentes el orden
+ *    es la escalera de niveles (Maternal → Preescolar 3), al revés
+ *    que el PDF, porque así se lee la sección de niveles del sitio.
+ *
+ * La foto de Samuel se extrajo del propio PDF (imagen incrustada +
+ * su máscara), aplanada sobre blanco y recortada al mismo encuadre
+ * 480×560 que las demás.
  *
  * ⚠ [PENDIENTE] Las semblanzas individuales las manda el cliente
  * "durante la semana"; al llegar se llenan aquí y las cards las
@@ -954,21 +986,26 @@ export const EQUIPO: readonly GrupoEquipo[] = [
     color: "var(--ceem-navy-deep)",
     integrantes: [
       {
-        nombre: "Dra. Alma Martínez",
+        nombre: "Dra. Alma E. Martínez",
         rol: "Dirección General",
         foto: "/equipo/alma-martinez.webp",
       },
     ],
   },
   {
-    titulo: "Coordinación Académica",
-    descripcion: "El puente entre la dirección y cada salón.",
-    color: "var(--ceem-carmin-deep)",
+    titulo: "Subdirección y control escolar",
+    descripcion: "Quienes sostienen la administración y el expediente de cada alumno.",
+    color: "var(--ceem-purple-deep)",
     integrantes: [
       {
         nombre: "Lic. Pamela Tejeda",
-        rol: "Coordinación Académica",
+        rol: "Subdirección administrativa",
         foto: "/equipo/pamela-tejeda.webp",
+      },
+      {
+        nombre: "Lic. Juan Carlos De la Rosa",
+        rol: "Control Escolar",
+        foto: "/equipo/juan-carlos-de-la-rosa.webp",
       },
     ],
   },
@@ -978,12 +1015,12 @@ export const EQUIPO: readonly GrupoEquipo[] = [
     color: "var(--ceem-cyan-deep)",
     integrantes: [
       {
-        nombre: "Lic. Magnolia",
-        rol: "Maternales",
+        nombre: "Lic. Magnolia Hernández",
+        rol: "Maternal",
         foto: "/equipo/magnolia.webp",
       },
       {
-        nombre: "Lic. Silvia",
+        nombre: "Lic. Silvia Hernández",
         rol: "Preescolar 1",
         foto: "/equipo/silvia.webp",
       },
@@ -993,32 +1030,36 @@ export const EQUIPO: readonly GrupoEquipo[] = [
         foto: "/equipo/margarita-rosas.webp",
       },
       {
+        /* El organigrama le pone "Enlace Academico" como insignia
+           además de su nivel; se conservan los dos. */
         nombre: "Lic. Gabina Acosta",
-        rol: "Enlace Académico y Preescolar 3",
+        rol: "Preescolar 3 y Enlace Académico",
         foto: "/equipo/gabina-acosta.webp",
       },
     ],
   },
   {
-    titulo: "Equipo de apoyo",
-    descripcion: "Quienes hacen que todo funcione todos los días.",
-    color: "var(--ceem-olive-deep)",
+    titulo: "Maestras suplentes",
+    descripcion: "El relevo que mantiene cada grupo acompañado.",
+    color: "var(--ceem-carmin-deep)",
     integrantes: [
       {
-        nombre: "Lic. Juan Carlos De la Rosa",
-        rol: "Control Escolar",
-        foto: "/equipo/juan-carlos-de-la-rosa.webp",
-      },
-      {
-        nombre: "Lic. Sofía",
-        rol: "Maestra suplente",
-        foto: "/equipo/sofia.webp",
-      },
-      {
-        nombre: "Lic. Magali",
+        nombre: "Lic. Magali García",
         rol: "Maestra suplente",
         foto: "/equipo/magali.webp",
       },
+      {
+        nombre: "Lic. Sofía Osnaya",
+        rol: "Maestra suplente",
+        foto: "/equipo/sofia.webp",
+      },
+    ],
+  },
+  {
+    titulo: "Talleres y equipo de apoyo",
+    descripcion: "Quienes hacen que todo funcione todos los días.",
+    color: "var(--ceem-olive-deep)",
+    integrantes: [
       {
         nombre: "Lic. Tadeo Alfaro",
         rol: "Tae Kwon Do",
@@ -1026,8 +1067,13 @@ export const EQUIPO: readonly GrupoEquipo[] = [
       },
       {
         nombre: "Lizeth Miranda",
-        rol: "Auxiliar de cocina e intendencia",
+        rol: "Auxiliar de Limpieza y Cocina",
         foto: "/equipo/lizeth-miranda.webp",
+      },
+      {
+        nombre: "Samuel E. Martínez",
+        rol: "Servicio de Seguridad",
+        foto: "/equipo/samuel-martinez.webp",
       },
     ],
   },

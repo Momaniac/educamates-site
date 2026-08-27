@@ -614,8 +614,8 @@ export default function HomePage() {
                 Las personas que acompañan a tu hijo
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-brand-text/70">
-                Un equipo por cada etapa: dirección, coordinación académica, maestras por nivel y
-                el apoyo que hace que todo funcione.
+                Un equipo por cada etapa: dirección, subdirección administrativa y control
+                escolar, maestras por nivel y el apoyo que hace que todo funcione.
               </p>
             </header>
 
