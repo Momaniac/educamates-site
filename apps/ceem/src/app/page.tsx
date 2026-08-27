@@ -19,6 +19,7 @@ import { buildWhatsAppUrl } from "@educamates/ui";
 import { SiteHeader } from "@/components/site-header";
 import { AdmisionForm } from "@/components/admision-form";
 import { Icon } from "@/components/icons";
+import { PersonajeCTA } from "@/components/personaje-cta";
 import { Wordmark } from "@/components/wordmark";
 import {
   BENEFICIOS,
@@ -311,6 +312,8 @@ export default function HomePage() {
                 </article>
               ))}
             </div>
+
+            <PersonajeCTA promo={PROMOCIONES.visita} className="mt-14" />
           </div>
         </section>
 
@@ -391,6 +394,8 @@ export default function HomePage() {
               ))}
             </div>
 
+            <PersonajeCTA promo={PROMOCIONES.programas} lado="derecha" className="mt-14" />
+
             {/* ── Horarios ── */}
             {/*
              * Las tres modalidades oficiales (17-ago-2026). Van
@@ -423,6 +428,8 @@ export default function HomePage() {
                   </article>
                 ))}
               </div>
+
+              <PersonajeCTA promo={PROMOCIONES.horarios} className="mt-12" />
             </div>
           </div>
         </section>
@@ -506,6 +513,8 @@ export default function HomePage() {
                 </article>
               ))}
             </div>
+
+            <PersonajeCTA promo={PROMOCIONES.informacion} lado="derecha" className="mt-14" />
           </div>
         </section>
 
@@ -539,6 +548,8 @@ export default function HomePage() {
               ))}
             </div>
 
+            <PersonajeCTA promo={PROMOCIONES.comedor} className="mt-14" />
+
             {/* ── Educación inclusiva ── */}
             {/*
              * Texto literal del cliente (17-ago-2026). Tema
@@ -547,15 +558,8 @@ export default function HomePage() {
              */}
             <div
               id="inclusion"
-              className="scroll-mt-24 mt-16 grid items-center gap-8 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-7 shadow-[var(--ceem-sticker-shadow)] lg:grid-cols-[auto_1fr] lg:gap-12 sm:p-9"
+              className="scroll-mt-24 mt-16 rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-7 shadow-[var(--ceem-sticker-shadow)] sm:p-9"
             >
-              <Image
-                src="/ilustraciones/completos/nino-afro.png"
-                alt="Niño de EducaMates sonriendo, acompañando el mensaje de educación inclusiva"
-                width={200}
-                height={240}
-                className="soft-bounce mx-auto h-40 w-auto object-contain"
-              />
               <div>
                 <p className="text-sm font-black uppercase tracking-[.2em] text-brand-secondary">
                   Nuestro compromiso
@@ -569,6 +573,13 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
+
+              {/*
+               * El personaje que acompañaba este bloque estaba de
+               * adorno, sin decir nada. Ahora invita a contarnos,
+               * que es justo lo que necesita quien lee esto.
+               */}
+              <PersonajeCTA promo={PROMOCIONES.inclusion} lado="derecha" className="mt-8" />
             </div>
           </div>
         </section>
@@ -582,8 +593,10 @@ export default function HomePage() {
          * como etiqueta de grupo en cada card, no como bloques
          * separados que alargan el scroll.
          *
-         * La hada y la superheroína del mismo envío se asoman,
-         * como pidió el cliente: personajes acompañando bloques.
+         * Una de las dos caritas grandes del mismo envío se asoma,
+         * como pidió el cliente. La otra se retiró el 27-ago: los
+         * mensajes con globo se los llevan personajes de cuerpo
+         * entero, repartidos por todo el sitio.
          */}
         <section id="equipo" className="relative scroll-mt-24 overflow-hidden bg-white px-4 py-16 sm:px-6 sm:py-24">
           {/* Personajes asomándose tras el contenido. */}
@@ -591,20 +604,10 @@ export default function HomePage() {
             src={ILUSTRACIONES.hada.src}
             alt=""
             aria-hidden
-            width={300}
-            height={450}
-            className="soft-bounce pointer-events-none absolute -left-6 top-24 hidden h-44 w-auto lg:block xl:h-52"
+            width={512}
+            height={533}
+            className="soft-bounce pointer-events-none absolute -left-5 top-1/3 hidden h-32 w-auto lg:block xl:h-40"
           />
-          <Image
-            src={ILUSTRACIONES.superheroina.src}
-            alt=""
-            aria-hidden
-            width={300}
-            height={450}
-            className="soft-bounce pointer-events-none absolute -right-4 bottom-16 hidden h-44 w-auto lg:block xl:h-52"
-            style={{ animationDelay: "-2.1s" }}
-          />
-
           <div className="relative mx-auto max-w-6xl">
             <header className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
@@ -688,62 +691,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ Promociones ════════════════════════════════════ */}
-        {/*
-         * [OFICIAL 17-ago-2026] El cliente pidió personajes de CEEM
-         * con mensajes llamativos "a lo largo del sitio" para hacerlo
-         * más dinámico e incrementar conversiones. Los cinco mensajes
-         * son literales; cada tarjeta abre WhatsApp con un mensaje
-         * contextual en vez de un enlace genérico.
-         */}
-        <section
-          id="promociones"
-          className="scroll-mt-24 overflow-hidden bg-brand-muted/40 px-4 py-16 sm:px-6 sm:py-20"
-        >
-          <div className="mx-auto max-w-6xl">
-            <header className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-secondary">
-                Promociones
-              </p>
-              <h2 className="mt-3 text-3xl font-black text-brand-primary sm:text-4xl">
-                Lo que queremos que sepas
-              </h2>
-            </header>
-
-            <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {PROMOCIONES.map((promo, index) => (
-                <li key={promo.mensaje}>
-                  <a
-                    href={buildWhatsAppUrl({
-                      phone: CONTACT.whatsappNumber,
-                      message: promo.whatsappMensaje,
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-full flex-col items-center rounded-[var(--ceem-radius-card)] border-2 border-white bg-white p-5 text-center shadow-[var(--ceem-sticker-shadow)] transition-transform hover:scale-[1.03]"
-                  >
-                    <Image
-                      src={promo.ilustracion}
-                      alt={promo.ilustracionAlt}
-                      width={200}
-                      height={240}
-                      className="soft-bounce h-28 w-auto object-contain sm:h-32"
-                      style={{ animationDelay: `${index * 0.4}s` }}
-                    />
-                    <span className="mt-4 text-sm font-black leading-snug text-brand-primary sm:text-base">
-                      {promo.mensaje}
-                      </span>
-                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-black text-brand-secondary">
-                      <MessageCircle className="h-3.5 w-3.5" aria-hidden />
-                      Escríbenos
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         {/* ═══ Admisión ══════════════════════════════════════ */}
         {/*
          * Reestructurada el 17-ago-2026 con el proceso oficial del
@@ -822,6 +769,8 @@ export default function HomePage() {
                     Quiero información de costos
                   </a>
                 </div>
+
+                <PersonajeCTA promo={PROMOCIONES.becas} lado="derecha" className="mt-10" />
               </div>
 
               <div className="rounded-[var(--ceem-radius-card)] bg-white p-6 shadow-2xl sm:p-8">
@@ -956,6 +905,8 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
+
+            <PersonajeCTA promo={PROMOCIONES.inscripcion} className="mt-14" />
           </div>
         </section>
 

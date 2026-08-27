@@ -131,6 +131,49 @@
   animation: soft-bounce 3.4s ease-in-out infinite;
 }
 
+/* ── Globos de diálogo de los personajes ───────────────────── */
+/*
+ * [OFICIAL 17-ago-2026] El cliente pidió que los personajes de CEEM
+ * aparecieran "a lo largo del sitio" con mensajes llamativos que
+ * muevan a escribir. El globo es una calcomanía más: fondo blanco,
+ * contorno del color que le toca a la sección y la colita apuntando
+ * al personaje que "habla".
+ */
+.globo {
+  position: relative;
+  background: #fff;
+  border: 3px solid var(--globo-color, var(--ceem-navy-deep));
+  border-radius: var(--ceem-radius-card);
+  box-shadow: var(--ceem-sticker-shadow);
+}
+
+/*
+ * La colita es un cuadrado girado 45° con solo dos de sus lados
+ * pintados; al girarlo, esos dos lados forman la punta y el tercer
+ * lado queda oculto bajo el borde del globo.
+ */
+.globo::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 9px);
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+.globo-izquierda::after {
+  left: -11px;
+  border-left: 3px solid var(--globo-color, var(--ceem-navy-deep));
+  border-bottom: 3px solid var(--globo-color, var(--ceem-navy-deep));
+}
+
+.globo-derecha::after {
+  right: -11px;
+  border-right: 3px solid var(--globo-color, var(--ceem-navy-deep));
+  border-top: 3px solid var(--globo-color, var(--ceem-navy-deep));
+}
+
 /* ── Accesibilidad: sin movimiento ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .blob-drift,

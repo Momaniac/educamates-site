@@ -757,14 +757,25 @@ export const ILUSTRACIONES = {
     src: "/ilustraciones/completos/nina-ceem.png",
     alt: "Niña de EducaMates con los brazos abiertos",
   },
-  /* Personajes extra del mismo envío, para asomarse en secciones. */
+  /*
+   * Dos piezas extra del mismo envío, para asomarse en secciones.
+   *
+   * ⚠ Los nombres de archivo (`hada`, `superheroina`) los pusimos
+   * nosotros el 17-ago y están mal: no son personajes de cuerpo
+   * entero, son DOS CARAS grandes, hermanas de las `caritas`. Se
+   * conservan los nombres porque las rutas ya están publicadas, pero
+   * no sirven para un globo de diálogo — para eso hacen falta
+   * personajes de cuerpo entero. Además venían con un 40 % de lienzo
+   * vacío abajo, que se recortó el 27-ago para que no se rendericen
+   * diminutas y descolgadas.
+   */
   hada: {
     src: "/ilustraciones/completos/hada.png",
-    alt: "Hada de EducaMates",
+    alt: "Carita sonriente de EducaMates de pelo rizado",
   },
   superheroina: {
     src: "/ilustraciones/completos/superheroina.png",
-    alt: "Superheroína de EducaMates",
+    alt: "Carita sonriente de EducaMates de pelo naranja",
   },
   /* Caritas para la franja de comunidad. La octava era duplicado. */
   caritas: [1, 2, 3, 4, 5, 6, 7].map((n) => `/ilustraciones/caritas/carita-${n}.png`),
@@ -919,12 +930,19 @@ export const COSTOS = {
 } as const;
 
 export interface Promocion {
+  /** Lo que dice el globo. */
   readonly mensaje: string;
   /** Texto prellenado del WhatsApp de esta promoción. */
   readonly whatsappMensaje: string;
-  /** Ilustración que acompaña la promoción. */
+  /** Personaje que lo dice. Va decorativo: el globo lleva el texto. */
   readonly ilustracion: string;
-  readonly ilustracionAlt: string;
+  /** Color del contorno del globo; el de la sección donde aparece. */
+  readonly color: string;
+  /**
+   * true = el mensaje es LITERAL del correo del cliente (17-ago-2026).
+   * Esos cinco no se reescriben sin pedírselo.
+   */
+  readonly literal?: boolean;
 }
 
 export interface Integrante {
@@ -1080,41 +1098,96 @@ export const EQUIPO: readonly GrupoEquipo[] = [
 ];
 
 /*
- * [OFICIAL 17-ago-2026] Mensajes promocionales que el cliente
- * quiere repartidos por el sitio con los personajes de CEEM, para
- * darle dinamismo e incrementar conversiones. Los cinco mensajes
- * son literales; los personajes se reparten los que ya existen.
- * El texto prellenado de WhatsApp lo abre ya en contexto.
+ * [OFICIAL 17-ago-2026 · REDISTRIBUIDO 27-ago-2026] Los mensajes con
+ * personajes que pidió el cliente.
+ *
+ * ⚠ La primera versión los metió TODOS en una sola sección llamada
+ * "Promociones", con las cinco tarjetas juntas. El correo pedía lo
+ * contrario, y lo dice dos veces: que los personajes aparezcan "a lo
+ * largo del sitio" con mensajes llamativos, y que "aparezcan en
+ * diferentes secciones del sitio… asomándose en algunos apartados o
+ * acompañando distintos bloques de información". Ahora cada mensaje
+ * vive pegado al contenido que responde, que es donde el papá ya
+ * tiene la duda: los horarios junto a los horarios, las becas en
+ * Admisión, el comedor en Servicios.
+ *
+ * Los cinco marcados `literal` son palabra por palabra del cliente y
+ * no se tocan sin pedírselo. Los otros tres los añadimos para cubrir
+ * "todo lo que decimos que hay ahí" — horarios, comedor y el
+ * acompañamiento a la neurodivergencia — y sí se pueden reescribir.
+ *
+ * La clave del objeto es dónde vive cada uno en page.tsx.
  */
-export const PROMOCIONES: readonly Promocion[] = [
-  {
-    mensaje: "Pregunta por nuestras becas",
-    whatsappMensaje: "Hola, quiero preguntar por las becas.",
-    ilustracion: "/ilustraciones/completos/nina-coletas.png",
-    ilustracionAlt: "Niña de EducaMates con coletas invitándote a preguntar por las becas",
-  },
-  {
-    mensaje: "Promoción de inscripción",
-    whatsappMensaje: "Hola, quiero información de la promoción de inscripción.",
-    ilustracion: "/ilustraciones/completos/nino-afro.png",
-    ilustracionAlt: "Niño de EducaMates sonriendo con la promoción de inscripción",
-  },
-  {
+export const PROMOCIONES = {
+  /* Nosotros — quien ya leyó quiénes somos, lo siguiente es venir. */
+  visita: {
     mensaje: "Agenda tu visita",
     whatsappMensaje: "Hola, quiero agendar una visita al Centro Educativo.",
     ilustracion: "/ilustraciones/completos/nina-mayor.png",
-    ilustracionAlt: "Niña de EducaMates agendando tu visita al Centro",
+    color: "var(--ceem-carmin-deep)",
+    literal: true,
   },
-  {
-    mensaje: "Solicita información",
-    whatsappMensaje: "Hola, quisiera recibir información del Centro Educativo.",
-    ilustracion: "/ilustraciones/completos/nino-pelirrojo.png",
-    ilustracionAlt: "Niño de EducaMates ofreciendo información",
-  },
-  {
+  /* Niveles — el mensaje literal del cliente sobre los programas. */
+  programas: {
     mensaje: "Conoce nuestros programas",
     whatsappMensaje: "Hola, quiero conocer los programas del Centro Educativo.",
-    ilustracion: "/ilustraciones/completos/nina-rubia.png",
-    ilustracionAlt: "Niña de EducaMates presentando los programas",
+    ilustracion: "/ilustraciones/completos/nino-pelirrojo.png",
+    color: "var(--ceem-cyan-deep)",
+    literal: true,
   },
-];
+  /* Horarios — nuestro, para la duda que sigue a ver las 3 jornadas. */
+  horarios: {
+    mensaje: "¿Cuál horario le acomoda a tu familia?",
+    whatsappMensaje: "Hola, quiero información sobre los horarios y el comedor.",
+    ilustracion: "/ilustraciones/completos/nina-rubia.png",
+    color: "var(--ceem-orange-deep)",
+  },
+  /* Talleres — el "solicita información" literal, tras las clases. */
+  informacion: {
+    mensaje: "Solicita información",
+    whatsappMensaje: "Hola, quisiera recibir información del Centro Educativo.",
+    ilustracion: "/ilustraciones/completos/nino-mayor.png",
+    color: "var(--ceem-olive-deep)",
+    literal: true,
+  },
+  /* Servicios — nuestro; comedor y horario extendido son la duda. */
+  comedor: {
+    mensaje: "Pregunta por el comedor y el horario extendido",
+    whatsappMensaje: "Hola, quiero información del comedor y del horario extendido.",
+    ilustracion: "/ilustraciones/completos/bebe-nino.png",
+    color: "var(--ceem-purple-deep)",
+  },
+  /*
+   * Inclusión — nuestro. Tema sensible: invita a contar, no vende.
+   * Reemplaza al personaje que ya acompañaba el bloque y que estaba
+   * ahí de adorno, sin decir nada.
+   */
+  inclusion: {
+    mensaje: "Cuéntanos cómo aprende tu hijo",
+    whatsappMensaje:
+      "Hola, quiero platicar sobre las necesidades de aprendizaje de mi hijo(a).",
+    ilustracion: "/ilustraciones/completos/nino-afro.png",
+    color: "var(--ceem-navy-deep)",
+  },
+  /* Admisión — las becas, junto a la cuota de inscripción. */
+  becas: {
+    mensaje: "Pregunta por nuestras becas",
+    whatsappMensaje: "Hola, quiero preguntar por las becas.",
+    /*
+     * Uno de los dos niños oficiales de CEEM: es el CTA sobre
+     * dinero, el que más pesa, y el cliente pidió que estos dos
+     * fueran los protagonistas del sitio.
+     */
+    ilustracion: "/ilustraciones/completos/nina-ceem.png",
+    color: "var(--ceem-orange-deep)",
+    literal: true,
+  },
+  /* Pagos — la promoción de inscripción, donde se habla de dinero. */
+  inscripcion: {
+    mensaje: "Promoción de inscripción",
+    whatsappMensaje: "Hola, quiero información de la promoción de inscripción.",
+    ilustracion: "/ilustraciones/completos/nina-coletas.png",
+    color: "var(--ceem-carmin-deep)",
+    literal: true,
+  },
+} as const satisfies Record<string, Promocion>;
